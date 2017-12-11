@@ -12,7 +12,5 @@ RUN apk --no-cache add openssl \
   && sed -i 's/bash/sh/' /flyway/flyway \
   && ln -s /flyway/flyway /usr/local/bin/flyway
 
-VOLUME /flyway/conf /flyway/drivers /flyway/jars /flyway/sql
-
 ENTRYPOINT ["flyway"]
 CMD ["-?"]

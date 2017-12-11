@@ -9,7 +9,5 @@ RUN curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLY
   && rm flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && ln -s /flyway/flyway /usr/local/bin/flyway
 
-VOLUME /flyway/conf /flyway/drivers /flyway/jars /flyway/sql
-
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
