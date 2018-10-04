@@ -33,12 +33,12 @@ Volume | Usage
 You can switch between the various Flyway editions by setting the `FLYWAY_EDITION` environment variable 
 to any of the following values:
 
-<table class="table table-striped">
-<tr><td><code>community</code></td><td>Select the Flyway Community Edition (default)</td></tr> 
-<tr><td><code>trial</code></td><td>Select the Flyway Trial Edition</td></tr> 
-<tr><td><code>pro</code></td><td>Select the Flyway Pro Edition</td></tr> 
-<tr><td><code>enterprise</code></td><td>Select the Flyway Enterprise Edition</td></tr> 
-</table> 
+Value | Description
+------|------
+`community` | Select the Flyway Community Edition (default) 
+`trial` | Select the Flyway Trial Edition 
+`pro` | Select the Flyway Pro Edition 
+`enterprise` | Select the Flyway Enterprise Edition 
 
 ## Getting started
 
