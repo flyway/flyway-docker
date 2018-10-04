@@ -10,12 +10,12 @@ This is the official repository for [Flyway Command-line](https://flywaydb.org/d
 
 The following tags are officially supported:
 
--	[`5.1.4`, `5.1`, `5`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
--	[`5.1.4-alpine`, `5.1-alpine`, `5-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+-	[`5.2.0`, `5.2`, `5`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
+-	[`5.2.0-alpine`, `5.2-alpine`, `5-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+-	[`5.1.4`, `5.1` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
+-	[`5.1.4-alpine`, `5.1-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
 -	[`5.0.7`, `5.0`  (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
 -	[`5.0.7-alpine`, `5.0-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
--	[`4.2.0`, `4.2`, `4` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
--	[`4.2.0-alpine`, `4.2-alpine`, `4-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
 
 ## Supported Volumes
 
@@ -27,6 +27,18 @@ Volume | Usage
 `/flyway/drivers` | Directory containing the [JDBC driver for your database](https://flywaydb.org/documentation/commandline/#jdbc-drivers) 
 `/flyway/sql` | The SQL files that you want Flyway to use (for [SQL-based migrations](https://flywaydb.org/documentation/migration/sql)) 
 `/flyway/jars` | The jars files that you want Flyway to use (for [Java-based migrations](https://flywaydb.org/documentation/migration/java)) 
+
+### Flyway Edition
+
+You can switch between the various Flyway editions by setting the `FLYWAY_EDITION` environment variable 
+to any of the following values:
+
+<table class="table table-striped">
+<tr><td><code>community</code></td><td>Select the Flyway Community Edition (default)</td></tr> 
+<tr><td><code>trial</code></td><td>Select the Flyway Trial Edition</td></tr> 
+<tr><td><code>pro</code></td><td>Select the Flyway Pro Edition</td></tr> 
+<tr><td><code>enterprise</code></td><td>Select the Flyway Enterprise Edition</td></tr> 
+</table> 
 
 ## Getting started
 
