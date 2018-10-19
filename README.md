@@ -152,4 +152,4 @@ services:
 ```
 
 Run `docker-compose up -d db`, wait a minute for MySQL to be initialized (or tail logs with `docker-compose logs -f`) 
-then run `docker-compose up flyway`.
+then run `docker-compose up --no-recreate flyway`.
