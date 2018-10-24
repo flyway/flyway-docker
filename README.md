@@ -10,8 +10,8 @@ This is the official repository for [Flyway Command-line](https://flywaydb.org/d
 
 The following tags are officially supported:
 
--	[`5.2.0`, `5.2`, `5`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
--	[`5.2.0-alpine`, `5.2-alpine`, `5-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+-	[`5.2.1`, `5.2`, `5`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
+-	[`5.2.1-alpine`, `5.2-alpine`, `5-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
 -	[`5.1.4`, `5.1` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
 -	[`5.1.4-alpine`, `5.1-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
 -	[`5.0.7`, `5.0`  (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
@@ -30,8 +30,7 @@ Volume | Usage
 
 ### Flyway Edition
 
-You can switch between the various Flyway editions by setting the `FLYWAY_EDITION` environment variable 
-to any of the following values:
+You can switch between the various Flyway editions by setting the `FLYWAY_EDITION` environment variable to any of the following values:
 
 Value | Description
 ------|------
@@ -92,18 +91,20 @@ Now run the image with that volume mapped as well:
 
 Flyway ships by default with drivers for 
 
-- SQL Server
-- MySQL
-- MariaDB
-- PostgreSQL
-- Sybase ASE
+- Aurora MySQL
+- Aurora PostgreSQL
+- Derby
 - H2
 - HSQLDB
-- Derby
+- MariaDB
+- MySQL
+- Percona XtraDB Cluster
+- PostgreSQL
+- SQL Server
 - SQLite
+- Sybase ASE
 
-If your database is not in this list, or if you want to ship a different or newer driver than the one included you
-can do so using the `flyway/drivers` volume.
+If your database is not in this list, or if you want to ship a different or newer driver than the one included you can do so using the `flyway/drivers` volume.
 
 ### Example
 
@@ -136,8 +137,8 @@ starts and links both containers.
 version: '3'
 services:
   flyway:
-    image: boxfuse/flyway
-    command: -url=jdbc:mysql://db -schemas=myschema -user=root -password=P@ssw0rd migrate
+    image: boxfuse/flyway:5.2.1
+    command: -url=jdbc:mysql://db -schemas=myschema -user=root -password=P@ssw0rd -connectRetries=60 migrate
     volumes:
       - .:/flyway/sql
     depends_on:
@@ -151,5 +152,4 @@ services:
       - 3306:3306
 ```
 
-Run `docker-compose up -d db`, wait a minute for MySQL to be initialized (or tail logs with `docker-compose logs -f`) 
-then run `docker-compose up flyway`.
+Run `docker-compose up`, this will start both Flyway and MySQL. Flyway will automatically wait for up to one minute for MySQL to be initialized before it begins to migrate the database.
