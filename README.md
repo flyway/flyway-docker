@@ -10,8 +10,8 @@ This is the official repository for [Flyway Command-line](https://flywaydb.org/d
 
 The following tags are officially supported:
 
--	[`5.2.1`, `5.2`, `5`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
--	[`5.2.1-alpine`, `5.2-alpine`, `5-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+-	[`5.2.2`, `5.2`, `5`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
+-	[`5.2.2-alpine`, `5.2-alpine`, `5-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
 -	[`5.1.4`, `5.1` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
 -	[`5.1.4-alpine`, `5.1-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
 -	[`5.0.7`, `5.0`  (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
@@ -35,7 +35,6 @@ You can switch between the various Flyway editions by setting the `FLYWAY_EDITIO
 Value | Description
 ------|------
 `community` | Select the Flyway Community Edition (default) 
-`trial` | Select the Flyway Trial Edition 
 `pro` | Select the Flyway Pro Edition 
 `enterprise` | Select the Flyway Enterprise Edition 
 
@@ -93,6 +92,7 @@ Flyway ships by default with drivers for
 
 - Aurora MySQL
 - Aurora PostgreSQL
+- CockroachDB
 - Derby
 - H2
 - HSQLDB
