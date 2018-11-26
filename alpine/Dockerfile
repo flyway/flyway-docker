@@ -2,7 +2,7 @@ FROM openjdk:8-jre-alpine
 
 WORKDIR /flyway
 
-ENV FLYWAY_VERSION 5.2.2
+ENV FLYWAY_VERSION 5.2.3
 
 RUN apk --no-cache add --update bash openssl \
   && wget https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz \
