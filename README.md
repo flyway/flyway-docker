@@ -17,6 +17,13 @@ The following tags are officially supported:
 -	[`5.0.7`, `5.0`  (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
 -	[`5.0.7-alpine`, `5.0-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
 
+## Preview Release Tags
+
+The following tags are for unsupported preview releases:
+
+-	[`6.0.0-beta`, `6.0`, `6` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
+-	[`6.0.0-beta-alpine`, `6.0-alpine`, `6-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+
 ## Supported Volumes
 
 To make it easy to run Flyway the way you want to, the following volumes are supported: 
