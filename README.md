@@ -137,7 +137,7 @@ starts and links both containers.
 version: '3'
 services:
   flyway:
-    image: boxfuse/flyway:5.2.1
+    image: boxfuse/flyway:5.2.4
     command: -url=jdbc:mysql://db -schemas=myschema -user=root -password=P@ssw0rd -connectRetries=60 migrate
     volumes:
       - .:/flyway/sql
