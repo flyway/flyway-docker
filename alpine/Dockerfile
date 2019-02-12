@@ -1,5 +1,7 @@
 FROM openjdk:8-jre-alpine
 
+# Add the flyway user and step in the directory
+RUN adduser -S -h /flyway flyway
 WORKDIR /flyway
 
 ENV FLYWAY_VERSION 5.2.4
@@ -10,6 +12,9 @@ RUN apk --no-cache add --update bash openssl \
   && mv flyway-${FLYWAY_VERSION}/* . \
   && rm flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && ln -s /flyway/flyway /usr/local/bin/flyway
+
+# Change to the flyway user
+USER flyway
 
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
