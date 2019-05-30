@@ -21,8 +21,7 @@ The following tags are officially supported:
 
 The following tags are for unsupported preview releases:
 
--	[`6.0.0-beta`, `6.0`, `6` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
--	[`6.0.0-beta-alpine`, `6.0-alpine`, `6-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+-	[`6.0.0-beta2`, `6.0`, `6` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
 
 ## Supported Volumes
 
