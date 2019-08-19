@@ -91,6 +91,7 @@ Flyway ships by default with drivers for
 - Aurora PostgreSQL
 - CockroachDB
 - Derby
+- Firebird
 - H2
 - HSQLDB
 - MariaDB
