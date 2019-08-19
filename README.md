@@ -16,14 +16,14 @@ The following tags are officially supported:
 
 ## Supported Volumes
 
-To make it easy to run Flyway the way you want to, the following volumes are supported: 
+To make it easy to run Flyway the way you want to, the following volumes are supported:
 
 Volume | Usage
 -------|------
-`/flyway/conf` | Directory containing a `flyway.conf` [configuration file](https://flywaydb.org/documentation/commandline/#configuration) 
-`/flyway/drivers` | Directory containing the [JDBC driver for your database](https://flywaydb.org/documentation/commandline/#jdbc-drivers) 
-`/flyway/sql` | The SQL files that you want Flyway to use (for [SQL-based migrations](https://flywaydb.org/documentation/migration/sql)) 
-`/flyway/jars` | The jars files that you want Flyway to use (for [Java-based migrations](https://flywaydb.org/documentation/migration/java)) 
+`/flyway/conf` | Directory containing a `flyway.conf` [configuration file](https://flywaydb.org/documentation/commandline/#configuration)
+`/flyway/drivers` | Directory containing the [JDBC driver for your database](https://flywaydb.org/documentation/commandline/#jdbc-drivers)
+`/flyway/sql` | The SQL files that you want Flyway to use (for [SQL-based migrations](https://flywaydb.org/documentation/migration/sql))
+`/flyway/jars` | The jars files that you want Flyway to use (for [Java-based migrations](https://flywaydb.org/documentation/migration/java))
 
 ### Flyway Edition
 
@@ -31,9 +31,9 @@ You can switch between the various Flyway editions by setting the `FLYWAY_EDITIO
 
 Value | Description
 ------|------
-`community` | Select the Flyway Community Edition (default) 
-`pro` | Select the Flyway Pro Edition 
-`enterprise` | Select the Flyway Enterprise Edition 
+`community` | Select the Flyway Community Edition (default)
+`pro` | Select the Flyway Pro Edition
+`enterprise` | Select the Flyway Enterprise Edition
 
 ## Getting started
 
@@ -85,7 +85,7 @@ Now run the image with that volume mapped as well:
 
 ## Adding a JDBC driver
 
-Flyway ships by default with drivers for 
+Flyway ships by default with drivers for
 
 - Aurora MySQL
 - Aurora PostgreSQL
@@ -113,7 +113,7 @@ You can now let Flyway make use of it my mapping that volume as well:
 
 ## Adding Java-based migrations and callbacks
 
-To pass in Java-based migrations and callbacks you can use the `flyway/jars` volume. 
+To pass in Java-based migrations and callbacks you can use the `flyway/jars` volume.
 
 ### Example
 
