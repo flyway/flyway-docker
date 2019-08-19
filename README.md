@@ -10,18 +10,9 @@ This is the official repository for [Flyway Command-line](https://flywaydb.org/d
 
 The following tags are officially supported:
 
--	[`5.2.4`, `5.2`, `5`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
--	[`5.2.4-alpine`, `5.2-alpine`, `5-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
--	[`5.1.4`, `5.1` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
--	[`5.1.4-alpine`, `5.1-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
--	[`5.0.7`, `5.0`  (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
--	[`5.0.7-alpine`, `5.0-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+-	[`6.0.0`, `6.0`, `6`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
+-	[`6.0.0-alpine`, `6.0-alpine`, `6-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
 
-## Preview Release Tags
-
-The following tags are for unsupported preview releases:
-
--	[`6.0.0-beta2`, `6.0`, `6` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
 
 ## Supported Volumes
 
@@ -143,7 +134,7 @@ starts and links both containers.
 version: '3'
 services:
   flyway:
-    image: flyway/flyway:5.2.4
+    image: flyway/flyway
     command: -url=jdbc:mysql://db -schemas=myschema -user=root -password=P@ssw0rd -connectRetries=60 migrate
     volumes:
       - .:/flyway/sql
