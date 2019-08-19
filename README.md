@@ -1,8 +1,8 @@
 # Official Flyway Docker images
 
-[![Docker Auto Build](https://img.shields.io/docker/automated/boxfuse/flyway.svg?style=flat-square)][docker]
+[![Docker Auto Build](https://img.shields.io/docker/automated/flyway/flyway.svg?style=flat-square)][docker]
 
-[docker]: https://hub.docker.com/r/boxfuse/flyway/
+[docker]: https://hub.docker.com/r/flyway/flyway/
 
 This is the official repository for [Flyway Command-line](https://flywaydb.org/documentation/commandline/) images.
 
@@ -48,13 +48,13 @@ Value | Description
 
 The easiest way to get started is simply to test the image by running
 
-`docker run --rm boxfuse/flyway`
+`docker run --rm flyway/flyway`
 
 This will give you Flyway Command-line's usage instructions.
 
 To do anything useful however, you must pass the arguments that you need to the image. For example:
 
-`docker run --rm boxfuse/flyway -url=jdbc:h2:mem:test -user=sa info`
+`docker run --rm flyway/flyway -url=jdbc:h2:mem:test -user=sa info`
 
 ## Adding SQL files
 
@@ -72,8 +72,8 @@ CREATE TABLE MyTable (
 ```
 
 Now run the image with the volume mapped:
-                                                             
-`docker run --rm -v /my/sqldir:/flyway/sql boxfuse/flyway -url=jdbc:h2:mem:test -user=sa migrate`
+
+`docker run --rm -v /my/sqldir:/flyway/sql flyway/flyway -url=jdbc:h2:mem:test -user=sa migrate`
 
 ## Adding a config file
 
@@ -89,8 +89,8 @@ flyway.user=sa
 ```
 
 Now run the image with that volume mapped as well:
-            
-`docker run --rm -v /my/sqldir:/flyway/sql -v /my/confdir:/flyway/conf boxfuse/flyway migrate`
+
+`docker run --rm -v /my/sqldir:/flyway/sql -v /my/confdir:/flyway/conf flyway/flyway migrate`
 
 ## Adding a JDBC driver
 
@@ -117,8 +117,8 @@ If your database is not in this list, or if you want to ship a different or newe
 Create a directory and drop for example the Oracle JDBC driver (`ojdbc8.jar`) in there.
 
 You can now let Flyway make use of it my mapping that volume as well:
-            
-`docker run --rm -v /my/sqldir:/flyway/sql -v /my/confdir:/flyway/conf -v /my/driverdir:/flyway/drivers boxfuse/flyway migrate`
+
+`docker run --rm -v /my/sqldir:/flyway/sql -v /my/confdir:/flyway/conf -v /my/driverdir:/flyway/drivers flyway/flyway migrate`
 
 ## Adding Java-based migrations and callbacks
 
@@ -129,8 +129,8 @@ To pass in Java-based migrations and callbacks you can use the `flyway/jars` vol
 Create a directory and drop for a jar with your Java-based migrations in there.
 
 You can now let Flyway make use of it my mapping that volume as well:
-            
-`docker run --rm -v /my/sqldir:/flyway/sql -v /my/confdir:/flyway/conf -v /my/jardir:/flyway/jars boxfuse/flyway migrate`
+
+`docker run --rm -v /my/sqldir:/flyway/sql -v /my/confdir:/flyway/conf -v /my/jardir:/flyway/jars flyway/flyway migrate`
 
 ## Docker Compose
 
@@ -143,7 +143,7 @@ starts and links both containers.
 version: '3'
 services:
   flyway:
-    image: boxfuse/flyway:5.2.4
+    image: flyway/flyway:5.2.4
     command: -url=jdbc:mysql://db -schemas=myschema -user=root -password=P@ssw0rd -connectRetries=60 migrate
     volumes:
       - .:/flyway/sql
