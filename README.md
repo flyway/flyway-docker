@@ -1,6 +1,6 @@
 # Official Flyway Docker images
 
-[![Docker Auto Build](https://img.shields.io/docker/automated/flyway/flyway.svg?style=flat-square)][docker]
+[![Docker Auto Build](https://img.shields.io/docker/cloud/automated/flyway/flyway)][docker]
 
 [docker]: https://hub.docker.com/r/flyway/flyway/
 
