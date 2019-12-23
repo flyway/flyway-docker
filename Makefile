@@ -1,6 +1,6 @@
 PERL = docker run --rm -w /app -v "$(realpath .):/app" perl:5-slim perl
 
-release: update_version
+release: update_version test
 
 update_version: require_version
 	$(PERL) -i -p -e 's/^(ENV FLYWAY_VERSION) .*$$/$$1 $(VERSION)/g;' Dockerfile alpine/Dockerfile
@@ -11,6 +11,7 @@ update_version: require_version
 		README.md
 
 test:
+	$(info Testing Docker image...)
 	docker run --rm $(shell docker build -q .) -url=jdbc:h2:mem:test info
 
 require_version:
