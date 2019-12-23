@@ -2,6 +2,9 @@ PERL = docker run --rm -w /app -v "$(realpath .):/app" perl:5-slim perl
 BASH = docker run --rm bash:5 bash
 
 release: update_version wait_for_artifacts test
+	git commit -a -m 'Update to $(VERSION)'
+	git tag v$(VERSION)
+	git push origin --atomic $(shell git rev-parse --abbrev-ref HEAD) v$(VERSION)
 
 update_version: require_version
 	$(PERL) -i -p -e 's/^(ENV FLYWAY_VERSION) .*$$/$$1 $(VERSION)/g;' Dockerfile alpine/Dockerfile
