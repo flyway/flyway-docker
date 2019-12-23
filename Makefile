@@ -1,6 +1,7 @@
 PERL = docker run --rm -w /app -v "$(realpath .):/app" perl:5-slim perl
+BASH = docker run --rm bash:5 bash
 
-release: update_version test
+release: update_version wait_for_artifacts test
 
 update_version: require_version
 	$(PERL) -i -p -e 's/^(ENV FLYWAY_VERSION) .*$$/$$1 $(VERSION)/g;' Dockerfile alpine/Dockerfile
@@ -9,6 +10,11 @@ update_version: require_version
 		-e 'my $$version = $$1 if ("$(VERSION)" =~ /(\d+\.\d+)\.\d+/); s/`\d+\.\d+(-alpine)?`/`$$version$$1`/g;' \
 		-e 'my $$version = $$1 if ("$(VERSION)" =~ /(\d+)\.\d+\.\d+/); s/`\d+(-alpine)?`/`$$version$$1`/g;' \
 		README.md
+
+wait_for_artifacts: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/$(VERSION)/
+wait_for_artifacts: require_version
+	$(info Waiting for artifacts...)
+	$(BASH) -c 'until wget -q --spider --user-agent="Mozilla" $(URL) &> /dev/null; do sleep 2; done'
 
 test:
 	$(info Testing Docker image...)
