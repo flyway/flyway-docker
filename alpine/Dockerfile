@@ -9,7 +9,7 @@ WORKDIR /flyway
 # Change to the flyway user
 USER flyway
 
-ENV FLYWAY_VERSION 6.3.1
+ENV FLYWAY_VERSION 6.3.2
 
 RUN wget https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && tar -xzf flyway-commandline-${FLYWAY_VERSION}.tar.gz \
