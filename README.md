@@ -64,7 +64,7 @@ CREATE TABLE MyTable (
 
 Now run the image with the volume mapped:
 
-`docker run --rm -v /my/sqldir:/flyway/sql flyway/flyway -url=jdbc:h2:mem:test -user=sa migrate`
+`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql flyway/flyway -url=jdbc:h2:mem:test -user=sa migrate`
 
 ## Adding a config file
 
@@ -81,7 +81,7 @@ flyway.user=sa
 
 Now run the image with that volume mapped as well:
 
-`docker run --rm -v /my/sqldir:/flyway/sql -v /my/confdir:/flyway/conf flyway/flyway migrate`
+`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf flyway/flyway migrate`
 
 ## Adding a JDBC driver
 
@@ -110,7 +110,7 @@ Create a directory and drop for example the Oracle JDBC driver (`ojdbc8.jar`) in
 
 You can now let Flyway make use of it my mapping that volume as well:
 
-`docker run --rm -v /my/sqldir:/flyway/sql -v /my/confdir:/flyway/conf -v /my/driverdir:/flyway/drivers flyway/flyway migrate`
+`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf -v /absolute/path/to/my/driverdir:/flyway/drivers flyway/flyway migrate`
 
 ## Adding Java-based migrations and callbacks
 
@@ -122,7 +122,7 @@ Create a directory and drop for a jar with your Java-based migrations in there.
 
 You can now let Flyway make use of it my mapping that volume as well:
 
-`docker run --rm -v /my/sqldir:/flyway/sql -v /my/confdir:/flyway/conf -v /my/jardir:/flyway/jars flyway/flyway migrate`
+`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf -v /absolute/path/to/my/jardir:/flyway/jars flyway/flyway migrate`
 
 ## Docker Compose
 
