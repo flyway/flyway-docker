@@ -8,6 +8,7 @@ release: update_version wait_for_artifacts test
 
 update_version: require_version
 	$(PERL) -i -p -e 's/^(ENV FLYWAY_VERSION) .*$$/$$1 $(VERSION)/g;' Dockerfile alpine/Dockerfile
+	$(PERL) -i -p -e 's/^(ENV FLYWAY_VERSION) .*$$/$$1 $(VERSION)/g;' flyway-azure/Dockerfile flyway-azure/alpine/Dockerfile
 	$(PERL) -i -p \
 		-e 's/`\d+\.\d+\.\d+(-alpine)?`/`$(VERSION)$$1`/g;' \
 		-e 'my $$version = $$1 if ("$(VERSION)" =~ /(\d+\.\d+)\.\d+/); s/`\d+\.\d+(-alpine)?`/`$$version$$1`/g;' \
@@ -20,8 +21,10 @@ wait_for_artifacts: require_version
 	$(BASH) -c 'until wget -q --spider --user-agent="Mozilla" $(URL) &> /dev/null; do sleep 2; done'
 
 test:
-	$(info Testing Docker image...)
-	docker run --rm $(shell docker build -q .) -url=jdbc:h2:mem:test info
+	$(info Testing standard Docker image...)
+	docker run --rm $(shell docker build -q flyway) -url=jdbc:h2:mem:test info
+	$(info Testing azure Docker image...)
+	docker run --rm $(shell docker build -q flyway-azure) -url=jdbc:h2:mem:test info
 
 require_version:
 ifndef VERSION
