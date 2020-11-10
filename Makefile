@@ -24,7 +24,7 @@ test:
 	$(info Testing standard Docker image...)
 	docker run --rm $(shell docker build -q .) -url=jdbc:h2:mem:test info
 	$(info Testing azure Docker image...)
-	docker run --rm $(shell docker build -q ./flyway-azure/alpine) -url=jdbc:h2:mem:test info
+	docker run --rm $(shell docker build -q ./flyway-azure/alpine) flyway -url=jdbc:h2:mem:test info
 
 require_version:
 ifndef VERSION
