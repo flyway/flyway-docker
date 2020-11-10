@@ -5,7 +5,7 @@ ENV LANG C.UTF-8
 # openjdk
 ENV JAVA_VERSION 8u252
 ENV JAVA_ALPINE_VERSION 8.252.09-r0
-# flyway
+
 ENV FLYWAY_VERSION 6.2.3
 
 # Requirement for non glibc-based containers
