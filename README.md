@@ -41,8 +41,8 @@ You can switch between the various Flyway editions by setting the `FLYWAY_EDITIO
 Value | Description
 ------|------
 `community` | Select the Flyway Community Edition (default)
-`pro` | Select the Flyway Pro Edition
-`enterprise` | Select the Flyway Enterprise Edition
+`pro` | Select the Flyway Pro (v6) Edition
+`enterprise` | Select the Flyway Enterprise (v6) / Teams (v7) Edition
 
 ## Getting started
 
