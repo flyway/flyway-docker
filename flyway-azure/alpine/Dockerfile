@@ -1,15 +1,19 @@
 FROM node:10-alpine
 
+# This file builds images which are suitable for use in Azure Pipeline agent jobs; these require more elements
+# to be present than the minimal Flyway commandline container.
+
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
-# openjdk
+
+# Define the version of OpenJDK we want
 ENV JAVA_VERSION 8u252
 ENV JAVA_ALPINE_VERSION 8.252.09-r0
 
-ENV FLYWAY_VERSION 6.2.3
+ENV FLYWAY_VERSION 7.2.0
 
-# Requirement for non glibc-based containers
-# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops#non-glibc-based-containers
+# This is a requirement for non glibc-based containers
+# see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops#non-glibc-based-containers
 RUN apk add --no-cache --virtual .pipeline-deps readline linux-pam \
   && apk add bash sudo shadow openssl curl tar\
   && apk del .pipeline-deps
@@ -26,6 +30,7 @@ RUN { \
 		echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
 	} > /usr/local/bin/docker-java-home \
 	&& chmod +x /usr/local/bin/docker-java-home
+	
 ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk/jre
 ENV PATH $PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
 
