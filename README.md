@@ -3,8 +3,16 @@
 [![Docker Auto Build](https://img.shields.io/docker/cloud/automated/flyway/flyway)][docker]
 
 [docker]: https://hub.docker.com/r/flyway/flyway/
+[docker]: https://hub.docker.com/r/flyway/flyway-azure/
 
 This is the official repository for [Flyway Command-line](https://flywaydb.org/documentation/commandline/) images.
+
+## Which image should I use?
+
+There are two families of images:
+
+- **flyway/flyway** - this image is the basic Flyway command line application, and should be your default choice.
+- **flyway/flyway-azure** - this image is suitable for use in Azure Pipelines agent jobs.
 
 ## Supported Tags
 
@@ -13,6 +21,7 @@ The following tags are officially supported:
 -	[`7.0.0-beta1`, `7.2`, `7`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
 -	[`7.0.0-beta1-alpine`, `7.2-alpine`, `7-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
 
+The **flyway-azure** image *only* supports alpine versions.
 
 ## Supported Volumes
 
@@ -37,7 +46,7 @@ Value | Description
 
 ## Getting started
 
-The easiest way to get started is simply to test the image by running
+The easiest way to get started is simply to test the default image by running
 
 `docker run --rm flyway/flyway`
 
@@ -46,6 +55,11 @@ This will give you Flyway Command-line's usage instructions.
 To do anything useful however, you must pass the arguments that you need to the image. For example:
 
 `docker run --rm flyway/flyway -url=jdbc:h2:mem:test -user=sa info`
+
+Note that the syntax for **flyway/flyway-azure** is slightly different in order to be compatible with Azure Pipelines
+agent job requirements. As it does not define an entrypoint, you need to explicitly add the `flyway` command. For example:
+
+`docker run --rm flyway/flyway-azure flyway`
 
 ## Adding SQL files
 
