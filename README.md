@@ -59,7 +59,7 @@ To do anything useful however, you must pass the arguments that you need to the 
 Note that the syntax for **flyway/flyway-azure** is slightly different in order to be compatible with Azure Pipelines
 agent job requirements. As it does not define an entrypoint, you need to explicitly add the `flyway` command. For example:
 
-`docker run --rm flyway/flyway-azure flyway`
+`docker run --rm flyway/flyway-azure:latest-alpine flyway`
 
 ## Adding SQL files
 
