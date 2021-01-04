@@ -18,8 +18,8 @@ There are two families of images:
 
 The following tags are officially supported:
 
--	[`7.3.2`, `7.3`, `7`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
--	[`7.3.2-alpine`, `7.3-alpine`, `7-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+-	[`7.4.0`, `7.4`, `7`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
+-	[`7.4.0-alpine`, `7.4-alpine`, `7-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
 
 The **flyway-azure** image *only* supports alpine versions.
 
