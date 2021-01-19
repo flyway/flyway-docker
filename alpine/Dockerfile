@@ -1,4 +1,4 @@
-FROM openjdk:12-alpine
+FROM openjdk:16-alpine
 
 RUN apk --no-cache add --update bash=4.4.19-r1 openssl=1.1.1g-r0
 
