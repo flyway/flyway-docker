@@ -1,4 +1,4 @@
-FROM openjdk:16-alpine
+FROM adoptopenjdk/openjdk11:alpine-jre
 
 RUN apk --no-cache add --update bash openssl
 
