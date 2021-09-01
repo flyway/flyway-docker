@@ -10,7 +10,7 @@ ENV LANG C.UTF-8
 ENV JAVA_VERSION 8u275
 ENV JAVA_ALPINE_VERSION 8.275.01-r0
 
-ENV FLYWAY_VERSION 7.14.0
+ENV FLYWAY_VERSION 7.14.1
 
 # This is a requirement for non glibc-based containers
 # see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops#non-glibc-based-containers
