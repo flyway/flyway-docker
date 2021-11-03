@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11:alpine-jre
+FROM eclipse-temurin:11-alpine
 
 RUN apk --no-cache add --update bash openssl
 
