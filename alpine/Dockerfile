@@ -1,6 +1,6 @@
-FROM eclipse-temurin:11-alpine
+FROM alpine:3.15.0
 
-RUN apk --no-cache add --update bash openssl
+RUN apk --no-cache add --update bash openssl openjdk8-jre
 
 # Add the flyway user and step in the directory
 RUN addgroup flyway \
