@@ -5,7 +5,7 @@
 [docker]: https://hub.docker.com/r/flyway/flyway/
 [docker]: https://hub.docker.com/r/flyway/flyway-azure/
 
-This is the official repository for [Flyway Command-line](https://flywaydb.org/documentation/commandline/) images.
+This is the official repository for [Flyway Command-line](https://flywaydb.org/documentation/usage/commandline/) images.
 
 ## Which image should I use?
 
@@ -29,10 +29,10 @@ To make it easy to run Flyway the way you want to, the following volumes are sup
 
 Volume | Usage
 -------|------
-`/flyway/conf` | Directory containing a `flyway.conf` [configuration file](https://flywaydb.org/documentation/commandline/#configuration)
-`/flyway/drivers` | Directory containing the [JDBC driver for your database](https://flywaydb.org/documentation/commandline/#jdbc-drivers)
-`/flyway/sql` | The SQL files that you want Flyway to use (for [SQL-based migrations](https://flywaydb.org/documentation/migration/sql))
-`/flyway/jars` | The jars files that you want Flyway to use (for [Java-based migrations](https://flywaydb.org/documentation/migration/java))
+`/flyway/conf` | Directory containing a `flyway.conf` [configuration file](https://flywaydb.org/documentation/usage/commandline/#configuration)
+`/flyway/drivers` | Directory containing the [JDBC driver for your database](https://flywaydb.org/documentation/usage/commandline/#jdbc-drivers)
+`/flyway/sql` | The SQL files that you want Flyway to use (for [SQL-based migrations](https://flywaydb.org/documentation/concepts/migrations#sql-based-migrations))
+`/flyway/jars` | The jars files that you want Flyway to use (for [Java-based migrations](https://flywaydb.org/documentation/concepts/migrations#java-based-migrations))
 
 ### Flyway Edition
 
