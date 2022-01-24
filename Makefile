@@ -1,12 +1,7 @@
 PERL = docker run --rm -w /app -v "$(realpath .):/app" perl:5-slim perl
 BASH = docker run --rm bash:5 bash
 
-release: update_version wait_for_artifacts test
-	git commit --allow-empty -a -m 'Update to $(VERSION)'
-	git tag v$(VERSION)
-	git push origin --atomic $(shell git rev-parse --abbrev-ref HEAD) v$(VERSION)
-
-update_version: require_version
+update_version:
 	$(PERL) -i -p -e 's/^(ENV FLYWAY_VERSION) .*$$/$$1 $(VERSION)/g;' Dockerfile alpine/Dockerfile
 	$(PERL) -i -p -e 's/^(ENV FLYWAY_VERSION) .*$$/$$1 $(VERSION)/g;' flyway-azure/alpine/Dockerfile
 	$(PERL) -i -p \
@@ -16,7 +11,7 @@ update_version: require_version
 		README.md
 
 wait_for_artifacts: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/$(VERSION)/
-wait_for_artifacts: require_version
+wait_for_artifacts:
 	$(info Waiting for artifacts...)
 	$(BASH) -c 'until wget -q --spider --user-agent="Mozilla" $(URL) &> /dev/null; do sleep 2; done'
 
@@ -26,7 +21,7 @@ test:
 	$(info Testing azure Docker image...)
 	docker run --rm $(shell docker build -q ./flyway-azure/alpine) flyway -url=jdbc:h2:mem:test info
 
-require_version:
-ifndef VERSION
-	$(error You must specify a VERSION variable)
-endif
+release:
+	git commit --allow-empty -a -m 'Update to $(VERSION)'
+	git tag v$(VERSION)
+	git push origin --atomic $(shell git rev-parse --abbrev-ref HEAD) v$(VERSION)
