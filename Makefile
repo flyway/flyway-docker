@@ -14,6 +14,18 @@ wait_for_artifacts:
 	$(info Waiting for artifacts...)
 	$(BASH) -c 'until wget -q --spider --user-agent="Mozilla" $(URL) &> /dev/null; do sleep 2; done'
 
+build:
+	docker build -q -t fetch ./build
+	docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
+    -t flyway/flyway:latest \
+    -t flyway/flyway:$(VERSION) \
+    -t flyway/flyway:$(${VERSION%.*}) \
+    -t flyway/flyway:$(${VERSION%.*.*}) .
+
+echo:
+	echo $(${VERSION%.*})
+	echo $(${VERSION%.*.*})
+
 test:
 	docker build -q -t fetch ./build
 	$(info Testing standard Docker image...)
