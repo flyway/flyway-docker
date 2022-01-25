@@ -1,5 +1,7 @@
 PERL = docker run --rm -w /app -v "$(realpath .):/app" perl:5-slim perl
 BASH = docker run --rm bash:5 bash
+E =
+S = $E $E
 
 update_version:
 	$(PERL) -i -p -e 's/^(ENV FLYWAY_VERSION) .*$$/$$1 $(VERSION)/g;' build/Dockerfile Dockerfile alpine/Dockerfile flyway-azure/alpine/Dockerfile
@@ -15,16 +17,11 @@ wait_for_artifacts:
 	$(BASH) -c 'until wget -q --spider --user-agent="Mozilla" $(URL) &> /dev/null; do sleep 2; done'
 
 build:
-	docker build -q -t fetch ./build
 	docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
     -t flyway/flyway:latest \
     -t flyway/flyway:$(VERSION) \
-    -t flyway/flyway:$(${VERSION%.*}) \
-    -t flyway/flyway:$(${VERSION%.*.*}) .
-
-echo:
-	echo ${VERSION%.*}
-	echo ${VERSION%.*.*}
+    -t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
+    -t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION)))) .
 
 test:
 	docker build -q -t fetch ./build
