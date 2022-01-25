@@ -16,10 +16,11 @@ wait_for_artifacts:
 	$(BASH) -c 'until wget -q --spider --user-agent="Mozilla" $(URL) &> /dev/null; do sleep 2; done'
 
 test:
+	docker build -q -t fetch ./build
 	$(info Testing standard Docker image...)
 	docker run --rm $(shell docker build -q .) -url=jdbc:h2:mem:test info
 	$(info Testing alpine Docker image...)
-    docker run --rm $(shell docker build -q ./alpine) -url=jdbc:h2:mem:test info
+	docker run --rm $(shell docker build -q ./alpine) -url=jdbc:h2:mem:test info
 	$(info Testing azure Docker image...)
 	docker run --rm $(shell docker build -q ./flyway-azure/alpine) flyway -url=jdbc:h2:mem:test info
 
