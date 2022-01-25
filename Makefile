@@ -17,7 +17,8 @@ wait_for_artifacts:
 	$(BASH) -c 'until wget -q --spider --user-agent="Mozilla" $(URL) &> /dev/null; do sleep 2; done'
 
 build:
-	docker buildx create --name multi_arch_builder_$(VERSION) --driver-opt network=bridge --use
+	docker buildx rm multi_arch_builder
+	docker buildx create --name multi_arch_builder --use
 	docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
 	-t flyway/flyway:latest \
 	-t flyway/flyway:$(VERSION) \
