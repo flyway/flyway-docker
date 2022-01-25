@@ -18,6 +18,8 @@ wait_for_artifacts:
 test:
 	$(info Testing standard Docker image...)
 	docker run --rm $(shell docker build -q .) -url=jdbc:h2:mem:test info
+	$(info Testing alpine Docker image...)
+    docker run --rm $(shell docker build -q ./alpine) -url=jdbc:h2:mem:test info
 	$(info Testing azure Docker image...)
 	docker run --rm $(shell docker build -q ./flyway-azure/alpine) flyway -url=jdbc:h2:mem:test info
 
