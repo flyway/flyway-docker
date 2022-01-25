@@ -1,3 +1,8 @@
+FROM bash:5 as fetch
+ENV FLYWAY_VERSION 8.4.2
+WORKDIR /flyway
+RUN wget https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz
+
 FROM node:10-alpine
 
 # This file builds images which are suitable for use in Azure Pipeline agent jobs; these require more elements
@@ -41,8 +46,9 @@ RUN set -x \
 
 WORKDIR /flyway
 
-RUN curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz -o flyway-commandline-${FLYWAY_VERSION}.tar.gz \
-  && tar -xzf flyway-commandline-${FLYWAY_VERSION}.tar.gz --strip-components=1 \
+COPY --from=fetch /flyway/flyway-commandline-${FLYWAY_VERSION}.tar.gz ./
+
+RUN tar -xzf flyway-commandline-${FLYWAY_VERSION}.tar.gz --strip-components=1 \
   && rm flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   # make Flyway executable by other users
   && chmod +x /flyway/flyway \
