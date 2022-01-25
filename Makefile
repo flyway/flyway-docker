@@ -18,7 +18,7 @@ wait_for_artifacts:
 
 build:
 	docker buildx rm multi_arch_builder
-	docker buildx create --name multi_arch_builder --use
+	docker buildx create --name multi_arch_builder --driver-opt network=bridge --use
 	docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
 	-t flyway/flyway:latest \
 	-t flyway/flyway:$(VERSION) \
