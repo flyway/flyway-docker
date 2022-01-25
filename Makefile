@@ -4,7 +4,7 @@ E =
 S = $E $E
 
 update_version:
-	$(PERL) -i -p -e 's/^(ENV FLYWAY_VERSION) .*$$/$$1 $(VERSION)/g;' build/Dockerfile Dockerfile alpine/Dockerfile flyway-azure/alpine/Dockerfile
+	$(PERL) -i -p -e 's/^(ENV FLYWAY_VERSION) .*$$/$$1 $(VERSION)/g;' Dockerfile alpine/Dockerfile flyway-azure/alpine/Dockerfile
 	$(PERL) -i -p \
 		-e 's/`\d+\.\d+\.\d+(?:-beta\d+)?(-alpine)?`/`$(VERSION)$$1`/g;' \
 		-e 'my $$version = $$1 if ("$(VERSION)" =~ /(\d+\.\d+)\.\d+/); s/`\d+\.\d+(-alpine)?`/`$$version$$1`/g;' \
@@ -18,13 +18,22 @@ wait_for_artifacts:
 
 build:
 	docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
-    -t flyway/flyway:latest \
-    -t flyway/flyway:$(VERSION) \
-    -t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
-    -t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION)))) .
+	-t flyway/flyway:latest \
+	-t flyway/flyway:$(VERSION) \
+	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
+	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION)))) .
+	docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
+	-t flyway/flyway:latest-alpine \
+	-t flyway/flyway:$(VERSION)-alpine \
+	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-alpine \
+	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./alpine
+	docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
+	-t flyway/flyway-azure:latest-alpine \
+	-t flyway/flyway-azure:$(VERSION)-alpine \
+	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-alpine \
+	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./flyway-azure
 
 test:
-	docker build -q -t fetch ./build
 	$(info Testing standard Docker image...)
 	docker run --rm $(shell docker build -q .) -url=jdbc:h2:mem:test info
 	$(info Testing alpine Docker image...)
