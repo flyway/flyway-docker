@@ -23,8 +23,8 @@ build:
     -t flyway/flyway:$(${VERSION%.*.*}) .
 
 echo:
-	echo $(${VERSION%.*})
-	echo $(${VERSION%.*.*})
+	echo ${VERSION%.*}
+	echo ${VERSION%.*.*}
 
 test:
 	docker build -q -t fetch ./build
