@@ -1,9 +1,3 @@
-FROM bash:5 as fetch
-RUN apk add --no-cache openssl wget
-ENV FLYWAY_VERSION 8.4.2
-WORKDIR /flyway
-RUN wget https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz
-
 FROM node:10-alpine
 
 # This file builds images which are suitable for use in Azure Pipeline agent jobs; these require more elements
@@ -36,7 +30,7 @@ RUN { \
 		echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
 	} > /usr/local/bin/docker-java-home \
 	&& chmod +x /usr/local/bin/docker-java-home
-	
+
 ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk/jre
 ENV PATH $PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
 
@@ -47,9 +41,8 @@ RUN set -x \
 
 WORKDIR /flyway
 
-COPY --from=fetch /flyway/flyway-commandline-${FLYWAY_VERSION}.tar.gz ./
-
-RUN tar -xzf flyway-commandline-${FLYWAY_VERSION}.tar.gz --strip-components=1 \
+RUN curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz -o flyway-commandline-${FLYWAY_VERSION}.tar.gz \
+  && tar -xzf flyway-commandline-${FLYWAY_VERSION}.tar.gz --strip-components=1 \
   && rm flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   # make Flyway executable by other users
   && chmod +x /flyway/flyway \
