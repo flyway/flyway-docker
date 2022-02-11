@@ -35,10 +35,10 @@ build:
 	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-alpine \
 	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./flyway-azure/alpine
 
-build-windows:
+build_windows:
 	docker build \
     	-t flyway/flyway:latest-windowsservercore \
-    	-t flyway/flyway:$(VERSION) \
+    	-t flyway/flyway:$(VERSION)-windowsservercore \
     	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-windowsservercore \
     	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-windowsservercore ./windowsservercore
 
@@ -62,5 +62,5 @@ release:
 	git tag v$(VERSION)
 	git push origin --atomic $(shell git rev-parse --abbrev-ref HEAD) v$(VERSION)
 
-release_window:
+release_windows:
 	docker push -a flyway/flyway
