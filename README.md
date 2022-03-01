@@ -138,6 +138,15 @@ You can now let Flyway make use of it my mapping that volume as well:
 
 `docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf -v /absolute/path/to/my/jardir:/flyway/jars flyway/flyway migrate`
 
+## SSL Support
+
+To connect to a data source with SSL encryption enabled, set paths to the client certs in the following ENVs:
+- CA_CERT_FILE
+- CLIENT_KEY_FILE
+- CLIENT_CERT_FILE
+
+Please see the docker compose SSL example below too.
+
 ## Docker Compose
 
 To run both Flyway and the database that will be migrated in containers, you can use a `docker-compose.yml` file that
@@ -165,3 +174,36 @@ services:
 ```
 
 Run `docker-compose up`, this will start both Flyway and MySQL. Flyway will automatically wait for up to one minute for MySQL to be initialized before it begins to migrate the database.
+
+SSL Example
+```
+version: '3'
+services:
+  flyway:
+    image: flyway/flyway
+    command: -url=jdbc:mysql://db?useSSL=true -schemas=myschema -user=root -password=P@ssw0rd -connectRetries=60 migrate
+    environment:
+      - CA_CERT_FILE=/etc/certs/ca.pem
+      - CLIENT_KEY_FILE=/etc/certs/local-client.key.pem
+      - CLIENT_CERT_FILE=/etc/certs/local-client.crt.pem
+    volumes:
+      - .:/flyway/sql
+      - ./pki/:/etc/certs/:ro
+    depends_on:
+      - db
+  db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=P@ssw0rd
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --ssl-ca=/etc/certs/ca.pem
+      - --ssl-cert=/etc/certs/mysql.crt.pem
+      - --ssl-key=/etc/certs/mysql.key.pem
+    ports:
+      - 3306:3306
+    volumes:
+      - ./pki/:/etc/certs/:ro
+
+```

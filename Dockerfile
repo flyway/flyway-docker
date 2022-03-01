@@ -14,5 +14,6 @@ RUN curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLY
 
 ENV PATH="/flyway:${PATH}"
 
-ENTRYPOINT ["flyway"]
+ADD ./entrypoint.sh /flyway/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
 CMD ["-?"]
