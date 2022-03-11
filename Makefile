@@ -64,3 +64,6 @@ release:
 
 release_windows:
 	docker push -a flyway/flyway
+
+push_docker_readme:
+    docker run --rm -t -v $(pwd):/flyway-docker -e DOCKER_USER=$(USER) -e DOCKER_PASS=$(PASS) chko/docker-pushrm --file /flyway-docker/README.md flyway/flyway
