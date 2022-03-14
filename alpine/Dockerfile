@@ -7,7 +7,7 @@ WORKDIR /flyway
 
 USER flyway
 
-ENV FLYWAY_VERSION 8.5.2
+ENV FLYWAY_VERSION 8.5.3
 
 RUN wget https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && gzip -d flyway-commandline-${FLYWAY_VERSION}.tar.gz \
