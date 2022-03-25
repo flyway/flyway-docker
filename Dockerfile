@@ -1,4 +1,4 @@
-FROM docker.io/library/eclipse-temurin:11-jre
+FROM eclipse-temurin:11-jre
 
 RUN adduser --system --home /flyway --disabled-password --group flyway
 WORKDIR /flyway

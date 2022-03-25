@@ -1,4 +1,4 @@
-FROM docker.io/library/eclipse-temurin:11-jre-alpine
+FROM eclipse-temurin:11-jre-alpine
 
 RUN apk --no-cache add --update bash openssl
 

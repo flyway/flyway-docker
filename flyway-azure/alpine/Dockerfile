@@ -1,4 +1,4 @@
-FROM docker.io/library/node:10-alpine
+FROM node:10-alpine
 
 # This file builds images which are suitable for use in Azure Pipeline agent jobs; these require more elements
 # to be present than the minimal Flyway commandline container.
