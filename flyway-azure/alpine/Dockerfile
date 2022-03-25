@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM docker.io/library/node:10-alpine
 
 # This file builds images which are suitable for use in Azure Pipeline agent jobs; these require more elements
 # to be present than the minimal Flyway commandline container.
@@ -40,7 +40,25 @@ RUN set -x \
 
 WORKDIR /flyway
 
-RUN curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz -o flyway-commandline-${FLYWAY_VERSION}.tar.gz \
+# This is a requirement to securely manage software installation; it will be cleaned up before the OCI container image build completes.
+RUN apk add --no-cache --virtual .build-deps \
+    gnupg
+
+# Fetch and import public key into GPG keyring
+# https://www.spinics.net/lists/trinity-devel/msg01400.html
+RUN gpg --keyserver hkp://pgp.mit.edu:11371 \ 
+--recv-keys F79157DB93697AA32CD4C46CC485C5A843FADB15
+
+RUN wget https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz \
+  # Download the GPG detached signature for the tarball.
+  && wget https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz.asc \
+  # Download the checksum for the tarball.
+  && wget https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz.sha1 \
+  # Use GPG to verify that the tarball was signed by the owner of the key obtained.
+  && gpg --verify flyway-commandline-${FLYWAY_VERSION}.tar.gz.asc flyway-commandline-${FLYWAY_VERSION}.tar.gz \
+  #	Test that the stated checksum matches the tarball checksum by using the sha1sum tool.
+  && echo "$(cat flyway-commandline-${FLYWAY_VERSION}.tar.gz.sha1)  flyway-commandline-${FLYWAY_VERSION}.tar.gz"  | sha1sum -c - \
+  # If software package verification succeeds, install flyway-commandline
   && tar -xzf flyway-commandline-${FLYWAY_VERSION}.tar.gz --strip-components=1 \
   && rm flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && chmod +x /flyway/flyway \
