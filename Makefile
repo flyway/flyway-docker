@@ -1,4 +1,3 @@
-PERL = docker run --rm -w /app -v "$(realpath .):/app" perl:5-slim perl
 BASH = docker run --rm bash:5 bash
 E =
 S = $E $E
@@ -22,10 +21,10 @@ build:
 	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-alpine \
 	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./alpine
 	docker build --build-args FLYWAY_VERSION=$(VERSION) \
-	-t flyway/flyway-azure:latest-alpine \
-	-t flyway/flyway-azure:$(VERSION)-alpine \
-	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-alpine \
-	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./flyway-azure/alpine
+	-t flyway/flyway:latest-azure \
+	-t flyway/flyway:$(VERSION)-azure \
+	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-azure \
+	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-azure ./azure
 
 build_windows:
 	docker build --build-args FLYWAY_VERSION=$(VERSION) \
@@ -40,7 +39,7 @@ test:
 	$(info Testing alpine Docker image...)
 	docker run --rm $(shell docker build -q ./alpine) -url=jdbc:h2:mem:test info
 	$(info Testing azure Docker image...)
-	docker run --rm $(shell docker build -q ./flyway-azure/alpine) flyway -url=jdbc:h2:mem:test info
+	docker run --rm $(shell docker build -q ./azure) flyway -url=jdbc:h2:mem:test info
 
 release:
 	docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --build-args FLYWAY_VERSION=$(VERSION) \
@@ -49,7 +48,6 @@ release:
 	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
 	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION)))) .
 	docker push -a flyway/flyway
-	docker push -a flyway/flyway-azure
 	git commit --allow-empty -a -m 'Update to $(VERSION)'
 	git tag v$(VERSION)
 	git push origin --atomic $(shell git rev-parse --abbrev-ref HEAD) v$(VERSION)
