@@ -7,7 +7,7 @@ WORKDIR /flyway
 
 USER flyway
 
-ENV FLYWAY_VERSION 9.0.0-beta
+ARG FLYWAY_VERSION
 
 RUN wget https://download.red-gate.com/maven/release/org/flywaydb/enterprise/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && gzip -d flyway-commandline-${FLYWAY_VERSION}.tar.gz \
