@@ -1,26 +1,20 @@
+# Azure pipeline agents require specific things in their containers:
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops#linux-based-containers
+
 FROM node:10-alpine
 
-# This file builds images which are suitable for use in Azure Pipeline agent jobs; these require more elements
-# to be present than the minimal Flyway commandline container.
-
-# Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
-
-# Define the version of OpenJDK we want
 ENV JAVA_VERSION 8u275
 ENV JAVA_ALPINE_VERSION 8.275.01-r0
 
 ARG FLYWAY_VERSION
 
-# This is a requirement for non glibc-based containers
-# see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops#non-glibc-based-containers
 RUN apk add --no-cache --virtual .pipeline-deps readline linux-pam \
   && apk add bash sudo shadow openssl curl tar\
   && apk del .pipeline-deps
 
 LABEL "com.azure.dev.pipelines.agent.handler.node.path"="/usr/local/bin/node"
 
-# Install openjdk-8
 # Add a simple script that can auto-detect the appropriate JAVA_HOME value
 # based on whether the JDK or only the JRE is installed
 RUN { \
@@ -45,6 +39,3 @@ RUN curl -L https://download.red-gate.com/maven/release/org/flywaydb/enterprise/
   && rm flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && chmod +x /flyway/flyway \
   && ln -s /flyway/flyway /usr/local/bin/flyway
-
-# Do not define ENTRYPOINT. This is important for Azure pipeline agent jobs.
-# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops#linux-based-containers
