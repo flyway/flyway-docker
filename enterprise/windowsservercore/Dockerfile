@@ -1,0 +1,14 @@
+FROM eclipse-temurin:11-jre-windowsservercore
+WORKDIR /flyway
+
+ENV FLYWAY_VERSION=9.0.0-beta
+
+RUN curl -Uri https://download.red-gate.com/maven/release/org/flywaydb/flyway-commandline/$($env:FLYWAY_VERSION)/flyway-commandline-$($env:FLYWAY_VERSION)-windows-x64.zip -OutFile flyway-commandline-$($env:FLYWAY_VERSION)-windows-x64.zip
+RUN tar -xf flyway-commandline-$($env:FLYWAY_VERSION)-windows-x64.zip --strip-components=1
+RUN rm flyway-commandline-$($env:FLYWAY_VERSION)-windows-x64.zip
+RUN rm -r jre
+
+ENV PATH="C:\flyway;$($env.PATH)"
+
+ENTRYPOINT ["flyway.cmd"]
+CMD ["-?"]
