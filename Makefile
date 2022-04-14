@@ -54,6 +54,3 @@ release:
 
 release_windows:
 	docker push -a flyway/flyway
-
-push_docker_readme:
-	docker pushrm flyway/flyway
