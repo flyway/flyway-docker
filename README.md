@@ -3,16 +3,8 @@
 [![Docker Auto Build](https://img.shields.io/docker/cloud/automated/flyway/flyway)][docker]
 
 [docker]: https://hub.docker.com/r/flyway/flyway/
-[docker]: https://hub.docker.com/r/flyway/flyway-azure/
 
 This is the official repository for [Flyway Command-line](https://flywaydb.org/documentation/usage/commandline/) images.
-
-## Which image should I use?
-
-There are two families of images:
-
-- **flyway/flyway** - this image is the basic Flyway command line application, and should be your default choice.
-- **flyway/flyway-azure** - this image is suitable for use in Azure Pipelines agent jobs.
 
 ## Supported Tags
 
@@ -20,29 +12,20 @@ The following tags are officially supported:
 
 -	[`8.5.7`, `8.5`, `8`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
 -	[`8.5.7-alpine`, `8.5-alpine`, `8-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+-	[`8.5.7-azure`, `8.5-azure`, `8-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/azure/Dockerfile)
 
-The **flyway-azure** image *only* supports alpine versions.
+The **flyway/flyway:\*-azure** images *only* support alpine versions.
 
 ## Supported Volumes
 
 To make it easy to run Flyway the way you want to, the following volumes are supported:
 
-Volume | Usage
--------|------
-`/flyway/conf` | Directory containing a `flyway.conf` [configuration file](https://flywaydb.org/documentation/usage/commandline/#configuration)
+Volume            | Usage
+------------------|------
+`/flyway/conf`    | Directory containing a `flyway.conf` [configuration file](https://flywaydb.org/documentation/usage/commandline/#configuration)
 `/flyway/drivers` | Directory containing the [JDBC driver for your database](https://flywaydb.org/documentation/usage/commandline/#jdbc-drivers)
-`/flyway/sql` | The SQL files that you want Flyway to use (for [SQL-based migrations](https://flywaydb.org/documentation/concepts/migrations#sql-based-migrations))
-`/flyway/jars` | The jars files that you want Flyway to use (for [Java-based migrations](https://flywaydb.org/documentation/concepts/migrations#java-based-migrations))
-
-### Flyway Edition
-
-You can switch between the various Flyway editions by setting the `FLYWAY_EDITION` environment variable to any of the following values:
-
-Value | Description
-------|------
-`community` | Select the Flyway Community Edition (default)
-`pro` | Select the Flyway Pro (v6) Edition
-`enterprise` | Select the Flyway Enterprise (v6) / Teams (v7) Edition
+`/flyway/sql`     | The SQL files that you want Flyway to use (for [SQL-based migrations](https://flywaydb.org/documentation/concepts/migrations#sql-based-migrations))
+`/flyway/jars`    | The jars files that you want Flyway to use (for [Java-based migrations](https://flywaydb.org/documentation/concepts/migrations#java-based-migrations))
 
 ## Getting started
 
@@ -56,10 +39,10 @@ To do anything useful however, you must pass the arguments that you need to the 
 
 `docker run --rm flyway/flyway -url=jdbc:h2:mem:test -user=sa info`
 
-Note that the syntax for **flyway/flyway-azure** is slightly different in order to be compatible with Azure Pipelines
+Note that the syntax for **flyway/flyway:\*-azure** is slightly different in order to be compatible with Azure Pipelines
 agent job requirements. As it does not define an entrypoint, you need to explicitly add the `flyway` command. For example:
 
-`docker run --rm flyway/flyway-azure:latest-alpine flyway`
+`docker run --rm flyway/flyway:latest-azure flyway`
 
 ## Adding SQL files
 
@@ -69,11 +52,10 @@ To add your own SQL files, place them in a directory and mount it as the `flyway
 
 Create a new directory and add a file named `V1__Initial.sql` with following contents:
 
-```
+```sql
 CREATE TABLE MyTable (
     MyColumn VARCHAR(100) NOT NULL
 );
-
 ```
 
 Now run the image with the volume mapped:
@@ -109,7 +91,7 @@ Flyway ships by default with drivers for
 - H2
 - HSQLDB
 - MariaDB
-- MySQL
+- Oracle
 - Percona XtraDB Cluster
 - PostgreSQL
 - SQL Server
@@ -120,7 +102,7 @@ If your database is not in this list, or if you want to ship a different or newe
 
 ### Example
 
-Create a directory and drop for example the Oracle JDBC driver (`ojdbc8.jar`) in there.
+Create a directory and drop for example the MySQL JDBC driver in there.
 
 You can now let Flyway make use of it my mapping that volume as well:
 
