@@ -10,9 +10,10 @@ This is the official repository for [Flyway Command-line](https://flywaydb.org/d
 
 The following tags are officially supported:
 
--	[`8.5.7`, `8.5`, `8`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
--	[`8.5.7-alpine`, `8.5-alpine`, `8-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
--	[`8.5.7-azure`, `8.5-azure`, `8-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/azure/Dockerfile)
+- [`8.5.9`, `8.5`, `8`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
+- [`8.5.9-alpine`, `8.5-alpine`, `8-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+- [`8.5.9-azure`, `8.5-azure`, `8-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/azure/Dockerfile)
+
 
 The **flyway/flyway:\*-azure** images *only* support alpine versions.
 
