@@ -32,7 +32,7 @@ build:
 	-t flyway/flyway-azure:latest-alpine \
 	-t flyway/flyway-azure:$(VERSION)-alpine \
 	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-alpine \
-	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./flyway-azure/alpine
+	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./azure
 
 build_windows:
 	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
