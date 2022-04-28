@@ -3,7 +3,7 @@ WORKDIR /flyway
 
 ARG FLYWAY_VERSION
 
-RUN curl -Uri https://download.red-gate.com/maven/release/org/flywaydb/flyway-commandline/$($env:FLYWAY_VERSION)/flyway-commandline-$($env:FLYWAY_VERSION)-windows-x64.zip -OutFile flyway-commandline-$($env:FLYWAY_VERSION)-windows-x64.zip
+RUN curl -Uri https://download.red-gate.com/maven/release/org/flywaydb/enterprise/flyway-commandline/$($env:FLYWAY_VERSION)/flyway-commandline-$($env:FLYWAY_VERSION)-windows-x64.zip -OutFile flyway-commandline-$($env:FLYWAY_VERSION)-windows-x64.zip
 RUN tar -xf flyway-commandline-$($env:FLYWAY_VERSION)-windows-x64.zip --strip-components=1
 RUN rm flyway-commandline-$($env:FLYWAY_VERSION)-windows-x64.zip
 RUN rm -r jre
