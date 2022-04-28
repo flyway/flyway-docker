@@ -5,9 +5,9 @@ S = $E $E
 
 update_version:
 	$(PERL) -i -p \
-		-e 's/`\d+\.\d+\.\d+(?:-beta\d+)?(-alpine)?`/`$(VERSION)$$1`/g;' \
-		-e 'my $$version = $$1 if ("$(VERSION)" =~ /(\d+\.\d+)\.\d+/); s/`\d+\.\d+(-alpine)?`/`$$version$$1`/g;' \
-		-e 'my $$version = $$1 if ("$(VERSION)" =~ /(\d+)\.\d+\.\d+/); s/`\d+(-alpine)?`/`$$version$$1`/g;' \
+		-e 's/`\d+\.\d+\.\d+(?:-beta\d+)?(-(alpine|azure))?`/`$(VERSION)$$1`/g;' \
+		-e 'my $$version = $$1 if ("$(VERSION)" =~ /(\d+\.\d+)\.\d+/); s/`\d+\.\d+(-(alpine|azure))?`/`$$version$$1`/g;' \
+		-e 'my $$version = $$1 if ("$(VERSION)" =~ /(\d+)\.\d+\.\d+/); s/`\d+(-(alpine|azure))?`/`$$version$$1`/g;' \
 		README.md
 
 wait_for_artifacts: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/$(VERSION)/
@@ -29,10 +29,10 @@ build:
 	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-alpine \
 	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./alpine
 	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
-	-t flyway/flyway-azure:latest-alpine \
-	-t flyway/flyway-azure:$(VERSION)-alpine \
-	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-alpine \
-	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./azure
+	-t flyway/flyway:latest-azure \
+	-t flyway/flyway:$(VERSION)-azure \
+	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-azure \
+	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-azure ./azure
 
 build_windows:
 	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
@@ -56,7 +56,6 @@ release:
 	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
 	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION)))) .
 	docker push -a flyway/flyway
-	docker push -a flyway/flyway-azure
 	git commit --allow-empty -a -m 'Update to $(VERSION)'
 	git tag v$(VERSION)
 	git push origin --atomic $(shell git rev-parse --abbrev-ref HEAD) v$(VERSION)
