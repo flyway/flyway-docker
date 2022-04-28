@@ -19,27 +19,27 @@ build:
 	-docker buildx rm multi_arch_builder
 	docker buildx create --name multi_arch_builder --driver-opt network=bridge --use
 	docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --build-arg FLYWAY_VERSION=$(VERSION) \
-	-t flyway/flyway:latest \
-	-t flyway/flyway:$(VERSION) \
-	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
-	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION)))) .
+	-t redgate/flyway:latest \
+	-t redgate/flyway:$(VERSION) \
+	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
+	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION)))) .
 	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
-	-t flyway/flyway:latest-alpine \
-	-t flyway/flyway:$(VERSION)-alpine \
-	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-alpine \
-	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./alpine
+	-t redgate/flyway:latest-alpine \
+	-t redgate/flyway:$(VERSION)-alpine \
+	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-alpine \
+	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./alpine
 	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
-	-t flyway/flyway-azure:latest-alpine \
-	-t flyway/flyway-azure:$(VERSION)-alpine \
-	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-alpine \
-	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./flyway-azure/alpine
+	-t redgate/flyway:latest-azure \
+	-t redgate/flyway:$(VERSION)-azure \
+	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-azure \
+	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-azure ./azure
 
 build_windows:
 	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
-    	-t flyway/flyway:latest-windowsservercore \
-    	-t flyway/flyway:$(VERSION)-windowsservercore \
-    	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-windowsservercore \
-    	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-windowsservercore ./windowsservercore
+    	-t redgate/flyway:latest-windowsservercore \
+    	-t redgate/flyway:$(VERSION)-windowsservercore \
+    	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-windowsservercore \
+    	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-windowsservercore ./windowsservercore
 
 test:
 	$(info Testing standard Docker image...)
@@ -50,16 +50,15 @@ test:
 	docker run --rm $(shell docker build -q ./azure) flyway -url=jdbc:h2:mem:test info
 
 release:
-	docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --build-args FLYWAY_VERSION=$(VERSION) \
-	-t flyway/flyway:latest \
-	-t flyway/flyway:$(VERSION) \
-	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
-	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION)))) .
-	docker push -a flyway/flyway
-	docker push -a flyway/flyway-azure
+	docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --build-arg FLYWAY_VERSION=$(VERSION) \
+	-t redgate/flyway:latest \
+	-t redgate/flyway:$(VERSION) \
+	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
+	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION)))) .
+	docker push -a redgate/flyway
 	git commit --allow-empty -a -m 'Update to $(VERSION)'
 	git tag v$(VERSION)
 	git push origin --atomic $(shell git rev-parse --abbrev-ref HEAD) v$(VERSION)
 
 release_windows:
-	docker push -a flyway/flyway
+	docker push -a redgate/flyway

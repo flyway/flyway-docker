@@ -27,22 +27,12 @@ The **flyway-azure** image *only* supports alpine versions.
 
 To make it easy to run Flyway the way you want to, the following volumes are supported:
 
-Volume | Usage
--------|------
-`/flyway/conf` | Directory containing a `flyway.conf` [configuration file](https://flywaydb.org/documentation/usage/commandline/#configuration)
+Volume            | Usage
+------------------|------
+`/flyway/conf`    | Directory containing a `flyway.conf` [configuration file](https://flywaydb.org/documentation/usage/commandline/#configuration)
 `/flyway/drivers` | Directory containing the [JDBC driver for your database](https://flywaydb.org/documentation/usage/commandline/#jdbc-drivers)
-`/flyway/sql` | The SQL files that you want Flyway to use (for [SQL-based migrations](https://flywaydb.org/documentation/concepts/migrations#sql-based-migrations))
-`/flyway/jars` | The jars files that you want Flyway to use (for [Java-based migrations](https://flywaydb.org/documentation/concepts/migrations#java-based-migrations))
-
-### Flyway Edition
-
-You can switch between the various Flyway editions by setting the `FLYWAY_EDITION` environment variable to any of the following values:
-
-Value | Description
-------|------
-`community` | Select the Flyway Community Edition (default)
-`pro` | Select the Flyway Pro (v6) Edition
-`enterprise` | Select the Flyway Enterprise (v6) / Teams (v7) Edition
+`/flyway/sql`     | The SQL files that you want Flyway to use (for [SQL-based migrations](https://flywaydb.org/documentation/concepts/migrations#sql-based-migrations))
+`/flyway/jars`    | The jars files that you want Flyway to use (for [Java-based migrations](https://flywaydb.org/documentation/concepts/migrations#java-based-migrations))
 
 ## Getting started
 
@@ -69,11 +59,10 @@ To add your own SQL files, place them in a directory and mount it as the `flyway
 
 Create a new directory and add a file named `V1__Initial.sql` with following contents:
 
-```
+```sql
 CREATE TABLE MyTable (
     MyColumn VARCHAR(100) NOT NULL
 );
-
 ```
 
 Now run the image with the volume mapped:
@@ -109,7 +98,7 @@ Flyway ships by default with drivers for
 - H2
 - HSQLDB
 - MariaDB
-- MySQL
+- Oracle
 - Percona XtraDB Cluster
 - PostgreSQL
 - SQL Server
@@ -120,7 +109,7 @@ If your database is not in this list, or if you want to ship a different or newe
 
 ### Example
 
-Create a directory and drop for example the Oracle JDBC driver (`ojdbc8.jar`) in there.
+Create a directory and drop for example the MySQL JDBC driver in there.
 
 You can now let Flyway make use of it my mapping that volume as well:
 
