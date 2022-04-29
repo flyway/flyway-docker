@@ -16,9 +16,7 @@ wait_for_artifacts:
 	$(BASH) -c 'until wget -q --spider --user-agent="Mozilla" $(URL) &> /dev/null; do sleep 2; done'
 
 build:
-	-docker buildx rm multi_arch_builder
-	docker buildx create --name multi_arch_builder --driver-opt network=bridge --use
-	docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --build-arg FLYWAY_VERSION=$(VERSION) \
+	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
 	-t redgate/flyway:latest \
 	-t redgate/flyway:$(VERSION) \
 	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
@@ -50,11 +48,6 @@ test:
 	docker run --rm $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) ./azure) flyway -url=jdbc:h2:mem:test info
 
 release:
-	docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --build-arg FLYWAY_VERSION=$(VERSION) \
-	-t redgate/flyway:latest \
-	-t redgate/flyway:$(VERSION) \
-	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
-	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION)))) .
 	docker push -a redgate/flyway
 	git commit --allow-empty -a -m 'Update to $(VERSION)'
 	git tag v$(VERSION)
