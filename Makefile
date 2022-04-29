@@ -50,7 +50,7 @@ test:
 	docker run --rm $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) ./azure) flyway -url=jdbc:h2:mem:test info
 
 release:
-	docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --build-args FLYWAY_VERSION=$(VERSION) \
+	docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --build-arg FLYWAY_VERSION=$(VERSION) \
 	-t flyway/flyway:latest \
 	-t flyway/flyway:$(VERSION) \
 	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
