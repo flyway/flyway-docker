@@ -4,7 +4,7 @@ RUN apk --no-cache add --update bash openssl icu-libs krb5-libs libgcc libintl l
     && apk --no-cache add --update libgdiplus --repository https://dl-3.alpinelinux.org/alpine/edge/testing/ \
     && wget https://dot.net/v1/dotnet-install.sh \
     && chmod +x ./dotnet-install.sh \
-    && ./dotnet-install.sh -c 6.0 --runtime dotnet \
+    && ./dotnet-install.sh -c 6.0 --runtime dotnet -InstallDir /usr/local/bin \
     && rm ./dotnet-install.sh
 
 RUN addgroup flyway && adduser -S -h /flyway -D -G flyway flyway
