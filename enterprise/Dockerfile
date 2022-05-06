@@ -11,8 +11,6 @@ RUN apt-get update \
 RUN adduser --system --home /flyway --disabled-password --group flyway
 WORKDIR /flyway
 
-USER flyway
-
 ARG FLYWAY_VERSION
 
 RUN curl -L https://download.red-gate.com/maven/release/org/flywaydb/enterprise/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz -o flyway-commandline-${FLYWAY_VERSION}.tar.gz \
