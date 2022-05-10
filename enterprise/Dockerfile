@@ -8,10 +8,7 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install -y dotnet-runtime-6.0
 
-RUN adduser --system --home /flyway --disabled-password --group flyway
 WORKDIR /flyway
-
-USER flyway
 
 ARG FLYWAY_VERSION
 

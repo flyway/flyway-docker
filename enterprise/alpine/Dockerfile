@@ -7,10 +7,7 @@ RUN apk --no-cache add --update bash openssl icu-libs krb5-libs libgcc libintl l
     && ./dotnet-install.sh -c 6.0 --runtime dotnet -InstallDir /usr/local/bin \
     && rm ./dotnet-install.sh
 
-RUN addgroup flyway && adduser -S -h /flyway -D -G flyway flyway
 WORKDIR /flyway
-
-USER flyway
 
 ARG FLYWAY_VERSION
 
