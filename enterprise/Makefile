@@ -19,25 +19,25 @@ build:
 	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
 	-t redgate/flyway:latest \
 	-t redgate/flyway:$(VERSION) \
-	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
-	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION)))) .
+	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) \
+	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) .
 	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
 	-t redgate/flyway:latest-alpine \
 	-t redgate/flyway:$(VERSION)-alpine \
-	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-alpine \
-	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./alpine
+	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-alpine \
+	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-alpine ./alpine
 	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
 	-t redgate/flyway:latest-azure \
 	-t redgate/flyway:$(VERSION)-azure \
-	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-azure \
-	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-azure ./azure
+	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-azure \
+	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-azure ./azure
 
 build_windows:
 	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
     	-t redgate/flyway:latest-windowsservercore \
     	-t redgate/flyway:$(VERSION)-windowsservercore \
-    	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-windowsservercore \
-    	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-windowsservercore ./windowsservercore
+    	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-windowsservercore \
+    	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-windowsservercore ./windowsservercore
 
 test:
 	$(info Testing standard Docker image...)
