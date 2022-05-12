@@ -41,11 +41,11 @@ build_windows:
 
 test:
 	$(info Testing standard Docker image...)
-	docker run --rm $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) .) -url=jdbc:h2:mem:test info
+	docker run --rm $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) .) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test  info
 	$(info Testing alpine Docker image...)
-	docker run --rm $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) ./alpine) -url=jdbc:h2:mem:test info
+	docker run --rm $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) ./alpine) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test info
 	$(info Testing azure Docker image...)
-	docker run --rm $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) ./azure) flyway -url=jdbc:h2:mem:test info
+	docker run --rm $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) ./azure) flyway -licenseKey="$(KEY)" -url=jdbc:h2:mem:test info
 
 release:
 	docker push -a redgate/flyway
