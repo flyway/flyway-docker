@@ -21,25 +21,25 @@ build:
 	docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --build-arg FLYWAY_VERSION=$(VERSION) \
 	-t flyway/flyway:latest \
 	-t flyway/flyway:$(VERSION) \
-	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
-	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION)))) .
+	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) \
+	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) .
 	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
 	-t flyway/flyway:latest-alpine \
 	-t flyway/flyway:$(VERSION)-alpine \
-	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-alpine \
-	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./alpine
+	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-alpine \
+	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-alpine ./alpine
 	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
 	-t flyway/flyway-azure:latest-alpine \
 	-t flyway/flyway-azure:$(VERSION)-alpine \
-	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-alpine \
-	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-alpine ./azure
+	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-alpine \
+	-t flyway/flyway-azure:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-alpine ./azure
 
 build_windows:
 	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
     	-t flyway/flyway:latest-windowsservercore \
     	-t flyway/flyway:$(VERSION)-windowsservercore \
-    	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION))))-windowsservercore \
-    	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION))))-windowsservercore ./windowsservercore
+    	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-windowsservercore \
+    	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-windowsservercore ./windowsservercore
 
 test:
 	$(info Testing standard Docker image...)
@@ -53,8 +53,8 @@ release:
 	docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --build-arg FLYWAY_VERSION=$(VERSION) \
 	-t flyway/flyway:latest \
 	-t flyway/flyway:$(VERSION) \
-	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(VERSION)))) \
-	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(VERSION)))) .
+	-t flyway/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) \
+	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) .
 	docker push -a flyway/flyway
 	docker push -a flyway/flyway-azure
 	git commit --allow-empty -a -m 'Update to $(VERSION)'
