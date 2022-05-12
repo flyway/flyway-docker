@@ -16,17 +16,17 @@ wait_for_artifacts:
 	$(BASH) -c 'until wget -q --spider --user-agent="Mozilla" $(URL) &> /dev/null; do sleep 2; done'
 
 build:
-	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
+	docker build --pull --build-arg FLYWAY_VERSION=$(VERSION) \
 	-t redgate/flyway:latest \
 	-t redgate/flyway:$(VERSION) \
 	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) \
 	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) .
-	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
+	docker build --pull --build-arg FLYWAY_VERSION=$(VERSION) \
 	-t redgate/flyway:latest-alpine \
 	-t redgate/flyway:$(VERSION)-alpine \
 	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-alpine \
 	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-alpine ./alpine
-	docker build --build-arg FLYWAY_VERSION=$(VERSION) \
+	docker build --pull --build-arg FLYWAY_VERSION=$(VERSION) \
 	-t redgate/flyway:latest-azure \
 	-t redgate/flyway:$(VERSION)-azure \
 	-t redgate/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-azure \
