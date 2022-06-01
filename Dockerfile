@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11-jre
+FROM eclipse-temurin:11.0.14.1_1-jre
 
 RUN adduser --system --home /flyway --disabled-password --group flyway
 WORKDIR /flyway
