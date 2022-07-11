@@ -17,5 +17,11 @@ RUN curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLY
 
 ENV PATH="/flyway:${PATH}"
 
+ENV FLYWAY_EDITION=community
+ENV BASTION_SSH_KEY=""
+ENV DB_HOST=""
+ENV BASTION_USERNAME=""
+ENV BASTION_HOST=""
+
 COPY tunnel.sh /flyway/tunnel.sh
 ENTRYPOINT ["/flyway/tunnel.sh"]
