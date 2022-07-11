@@ -24,4 +24,3 @@ ENV BASTION_USERNAME=""
 ENV BASTION_HOST=""
 
 COPY tunnel.sh /flyway/tunnel.sh
-ENTRYPOINT ["/flyway/tunnel.sh"]

@@ -7,8 +7,6 @@ then
     chown flyway:flyway /flyway/bastion_ssh_private_key
     ssh -o "StrictHostKeyChecking no" -i /flyway/bastion_ssh_private_key -f ${BASTION_USERNAME}@${BASTION_HOST} -p ${BASTION_PORT} -L ${DATABASE_PORT}:${DB_HOST}:${DATABASE_PORT} -N
     echo "Connected"
-    bash
 else
     echo "WARNING: BASTION_SSH_KEY, DB_HOST, BASTION_USERNAME, BASTION_HOST, BASTION_PORT, or DATABASE_PORT was not set. Note: BASTION HOST WILL NOT BE USED"
-    bash
 fi
