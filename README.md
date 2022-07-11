@@ -6,6 +6,8 @@
 
 This is the official repository for [Flyway Command-line](https://flywaydb.org/documentation/usage/commandline/) images.
 
+The Flyway Teams and Enterprise images are available in [redgate/flyway](https://hub.docker.com/r/redgate/flyway/) on Dockerhub. To use Flyway Teams and Enterprise, the following documentation still applies - you need only replace `flyway/flyway` with `redgate/flyway`.
+
 ## Supported Tags
 
 The following tags are officially supported:
