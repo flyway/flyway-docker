@@ -3,25 +3,18 @@
 [![Docker Auto Build](https://img.shields.io/docker/cloud/automated/flyway/flyway)][docker]
 
 [docker]: https://hub.docker.com/r/flyway/flyway/
-[docker]: https://hub.docker.com/r/flyway/flyway-azure/
 
 This is the official repository for [Flyway Command-line](https://flywaydb.org/documentation/usage/commandline/) images.
-
-## Which image should I use?
-
-There are two families of images:
-
-- **flyway/flyway** - this image is the basic Flyway command line application, and should be your default choice.
-- **flyway/flyway-azure** - this image is suitable for use in Azure Pipelines agent jobs.
 
 ## Supported Tags
 
 The following tags are officially supported:
 
--	[`8.5.13`, `8.5`, `8`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
--	[`8.5.13-alpine`, `8.5-alpine`, `8-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+- [`8.5.13`, `8.5`, `8`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
+- [`8.5.13-alpine`, `8.5-alpine`, `8-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+- [`8.5.13-azure`, `8.5-azure`, `8-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/azure/Dockerfile)
 
-The **flyway-azure** image *only* supports alpine versions.
+The **flyway/flyway:\*-azure** images *only* support alpine versions.
 
 ## Supported Volumes
 
@@ -46,10 +39,10 @@ To do anything useful however, you must pass the arguments that you need to the 
 
 `docker run --rm flyway/flyway -url=jdbc:h2:mem:test -user=sa info`
 
-Note that the syntax for **flyway/flyway-azure** is slightly different in order to be compatible with Azure Pipelines
+Note that the syntax for **flyway/flyway:\*-azure** is slightly different in order to be compatible with Azure Pipelines
 agent job requirements. As it does not define an entrypoint, you need to explicitly add the `flyway` command. For example:
 
-`docker run --rm flyway/flyway-azure:latest-alpine flyway`
+`docker run --rm flyway/flyway:latest-azure flyway`
 
 ## Adding SQL files
 
