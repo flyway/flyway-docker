@@ -17,4 +17,5 @@ RUN curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLY
 
 ENV PATH="/flyway:${PATH}"
 
-
+COPY tunnel.sh /flyway/tunnel.sh
+ENTRYPOINT ["/flyway/tunnel.sh"]
