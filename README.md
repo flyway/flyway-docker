@@ -6,6 +6,8 @@
 
 This is the official repository for [Flyway Command-line](https://flywaydb.org/documentation/usage/commandline/) images.
 
+The Flyway Teams and Enterprise images are available in [redgate/flyway](https://hub.docker.com/r/redgate/flyway/) on Dockerhub. To use Flyway Teams and Enterprise, the following documentation still applies - you need only replace `flyway/flyway` with `redgate/flyway`.
+
 ## Supported Tags
 
 The following tags are officially supported:
@@ -81,24 +83,7 @@ Now run the image with that volume mapped as well:
 
 ## Adding a JDBC driver
 
-Flyway ships by default with drivers for
-
-- Aurora MySQL
-- Aurora PostgreSQL
-- CockroachDB
-- Derby
-- Firebird
-- H2
-- HSQLDB
-- MariaDB
-- Oracle
-- Percona XtraDB Cluster
-- PostgreSQL
-- SQL Server
-- SQLite
-- Sybase ASE
-
-If your database is not in this list, or if you want to ship a different or newer driver than the one included you can do so using the `flyway/drivers` volume.
+If your database driver is not shipped by default (you can check the official documentation [here](https://flywaydb.org/documentation/) to see if it is), or if you want to use a different or newer driver than the one included you can do so using the `flyway/drivers` volume.
 
 ### Example
 
