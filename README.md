@@ -3,25 +3,20 @@
 [![Docker Auto Build](https://img.shields.io/docker/cloud/automated/flyway/flyway)][docker]
 
 [docker]: https://hub.docker.com/r/flyway/flyway/
-[docker]: https://hub.docker.com/r/flyway/flyway-azure/
 
 This is the official repository for [Flyway Command-line](https://flywaydb.org/documentation/usage/commandline/) images.
 
-## Which image should I use?
-
-There are two families of images:
-
-- **flyway/flyway** - this image is the basic Flyway command line application, and should be your default choice.
-- **flyway/flyway-azure** - this image is suitable for use in Azure Pipelines agent jobs.
+The Flyway Teams and Enterprise images are available in [redgate/flyway](https://hub.docker.com/r/redgate/flyway/) on Dockerhub. To use Flyway Teams and Enterprise, the following documentation still applies - you need only replace `flyway/flyway` with `redgate/flyway`.
 
 ## Supported Tags
 
 The following tags are officially supported:
 
--	[`8.5.13`, `8.5`, `8`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
--	[`8.5.13-alpine`, `8.5-alpine`, `8-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+- [`8.5.13`, `8.5`, `8`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
+- [`8.5.13-alpine`, `8.5-alpine`, `8-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+- [`8.5.13-azure`, `8.5-azure`, `8-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/azure/Dockerfile)
 
-The **flyway-azure** image *only* supports alpine versions.
+The **flyway/flyway:\*-azure** images *only* support alpine versions.
 
 ## Supported Volumes
 
@@ -46,10 +41,10 @@ To do anything useful however, you must pass the arguments that you need to the 
 
 `docker run --rm flyway/flyway -url=jdbc:h2:mem:test -user=sa info`
 
-Note that the syntax for **flyway/flyway-azure** is slightly different in order to be compatible with Azure Pipelines
+Note that the syntax for **flyway/flyway:\*-azure** is slightly different in order to be compatible with Azure Pipelines
 agent job requirements. As it does not define an entrypoint, you need to explicitly add the `flyway` command. For example:
 
-`docker run --rm flyway/flyway-azure:latest-alpine flyway`
+`docker run --rm flyway/flyway:latest-azure flyway`
 
 ## Adding SQL files
 
@@ -88,24 +83,7 @@ Now run the image with that volume mapped as well:
 
 ## Adding a JDBC driver
 
-Flyway ships by default with drivers for
-
-- Aurora MySQL
-- Aurora PostgreSQL
-- CockroachDB
-- Derby
-- Firebird
-- H2
-- HSQLDB
-- MariaDB
-- Oracle
-- Percona XtraDB Cluster
-- PostgreSQL
-- SQL Server
-- SQLite
-- Sybase ASE
-
-If your database is not in this list, or if you want to ship a different or newer driver than the one included you can do so using the `flyway/drivers` volume.
+If your database driver is not shipped by default (you can check the official documentation [here](https://flywaydb.org/documentation/) to see if it is), or if you want to use a different or newer driver than the one included you can do so using the `flyway/drivers` volume.
 
 ### Example
 
