@@ -50,8 +50,8 @@ test:
 release:
 	docker push -a redgate/flyway
 	git commit --allow-empty -a -m 'Update to $(VERSION)'
-	git tag v$(VERSION)
-	git push origin --atomic $(shell git rev-parse --abbrev-ref HEAD) v$(VERSION)
+	git tag v$(VERSION) --force
+	git push origin --atomic $(shell git rev-parse --abbrev-ref HEAD) v$(VERSION) --force
 
 release_windows:
 	docker push -a redgate/flyway

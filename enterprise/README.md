@@ -1,22 +1,22 @@
-# Official Flyway Community Docker images
+# Official Flyway Teams and Enterprise Docker images
 
-[![Docker Auto Build](https://img.shields.io/docker/cloud/automated/flyway/flyway)][docker]
+[![Docker Auto Build](https://img.shields.io/docker/cloud/automated/redgate/flyway)][docker]
 
-[docker]: https://hub.docker.com/r/flyway/flyway/
+[docker]: https://hub.docker.com/r/redgate/flyway/
 
 This is the official repository for [Flyway Command-line](https://flywaydb.org/documentation/usage/commandline/) images.
 
-The Flyway Community images are available in [flyway/flyway](https://hub.docker.com/r/flyway/flyway/) on Dockerhub.
+The Flyway Teams and Enterprise images are available in [redgate/flyway](https://hub.docker.com/r/redgate/flyway/) on Dockerhub.
 
 ## Supported Tags
 
 The following tags are officially supported:
 
-- [`9.0.1`, `9.0`, `9`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
-- [`9.0.1-alpine`, `9.0-alpine`, `9-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
-- [`9.0.1-azure`, `9.0-azure`, `9-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/azure/Dockerfile)
+- [`9.0.0`, `9.0`, `9`, `latest` (*Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/Dockerfile)
+- [`9.0.0-alpine`, `9.0-alpine`, `9-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/alpine/Dockerfile)
+- [`9.0.0-azure`, `9.0-azure`, `9-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/azure/Dockerfile)
 
-The **flyway/flyway:\*-azure** images *only* support alpine versions.
+The **redgate/flyway:\*-azure** images *only* support alpine versions.
 
 ## Supported Volumes
 
@@ -33,18 +33,18 @@ Volume            | Usage
 
 The easiest way to get started is simply to test the default image by running
 
-`docker run --rm flyway/flyway`
+`docker run --rm redgate/flyway`
 
 This will give you Flyway Command-line's usage instructions.
 
 To do anything useful however, you must pass the arguments that you need to the image. For example:
 
-`docker run --rm flyway/flyway -url=jdbc:h2:mem:test -user=sa info`
+`docker run --rm redgate/flyway -licenseKey="FL01..." -url=jdbc:h2:mem:test -user=sa info`
 
-Note that the syntax for **flyway/flyway:\*-azure** is slightly different in order to be compatible with Azure Pipelines
+Note that the syntax for **redgate/flyway:\*-azure** is slightly different in order to be compatible with Azure Pipelines
 agent job requirements. As it does not define an entrypoint, you need to explicitly add the `flyway` command. For example:
 
-`docker run --rm flyway/flyway:latest-azure flyway`
+`docker run --rm redgate/flyway:latest-azure flyway`
 
 ## Adding SQL files
 
@@ -62,7 +62,7 @@ CREATE TABLE MyTable (
 
 Now run the image with the volume mapped:
 
-`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql flyway/flyway -url=jdbc:h2:mem:test -user=sa migrate`
+`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql redgate/flyway -licenseKey="FL01..." -url=jdbc:h2:mem:test -user=sa migrate`
 
 ## Adding a config file
 
@@ -75,11 +75,12 @@ Create a file named `flyway.conf` with the following contents:
 ```
 flyway.url=jdbc:h2:mem:test
 flyway.user=sa
+flyway.licenseKey=FL01...
 ```
 
 Now run the image with that volume mapped as well:
 
-`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf flyway/flyway migrate`
+`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf redgate/flyway migrate`
 
 ## Adding a JDBC driver
 
@@ -91,7 +92,7 @@ Create a directory and drop for example the MySQL JDBC driver in there.
 
 You can now let Flyway make use of it my mapping that volume as well:
 
-`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf -v /absolute/path/to/my/driverdir:/flyway/drivers flyway/flyway migrate`
+`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf -v /absolute/path/to/my/driverdir:/flyway/drivers redgate/flyway migrate`
 
 ## Adding Java-based migrations and callbacks
 
@@ -103,7 +104,7 @@ Create a directory and drop for a jar with your Java-based migrations in there.
 
 You can now let Flyway make use of it my mapping that volume as well:
 
-`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf -v /absolute/path/to/my/jardir:/flyway/jars flyway/flyway migrate`
+`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf -v /absolute/path/to/my/jardir:/flyway/jars redgate/flyway migrate`
 
 ## Docker Compose
 
@@ -116,8 +117,8 @@ starts and links both containers.
 version: '3'
 services:
   flyway:
-    image: flyway/flyway
-    command: -url=jdbc:mysql://db -schemas=myschema -user=root -password=P@ssw0rd -connectRetries=60 migrate
+    image: redgate/flyway
+    command: -licenseKey="FL01..." -url=jdbc:mysql://db -schemas=myschema -user=root -password=P@ssw0rd -connectRetries=60 migrate
     volumes:
       - .:/flyway/sql
     depends_on:
