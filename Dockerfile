@@ -10,7 +10,9 @@ ARG FLYWAY_VERSION
 RUN curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz -o flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && gzip -d flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && tar -xf flyway-commandline-${FLYWAY_VERSION}.tar --strip-components=1 \
-  && rm flyway-commandline-${FLYWAY_VERSION}.tar
+  && rm flyway-commandline-${FLYWAY_VERSION}.tar \
+  && chmod -R a+r /flyway \
+  && chmod a+x /flyway/flyway
 
 ENV PATH="/flyway:${PATH}"
 
