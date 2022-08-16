@@ -1,11 +1,12 @@
 FROM eclipse-temurin:11-jre-alpine
 
-RUN apk --no-cache add --update bash openssl icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib \
+RUN apk --no-cache add --update bash openssl icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib python3 py3-pip \
     && apk --no-cache add --update libgdiplus --repository https://dl-3.alpinelinux.org/alpine/edge/testing/ \
     && wget https://dot.net/v1/dotnet-install.sh \
     && chmod +x ./dotnet-install.sh \
     && ./dotnet-install.sh -c 6.0 --runtime dotnet -InstallDir /usr/local/bin \
     && rm ./dotnet-install.sh
+RUN pip3 install sqlfluff
 
 WORKDIR /flyway
 
