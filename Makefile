@@ -57,7 +57,7 @@ release:
 	-t flyway/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) .
 	docker push -a flyway/flyway
 	git commit --allow-empty -a -m 'Update to $(VERSION)'
-	git tag v$(VERSION)
+	git tag v$(VERSION) --force
 	git push origin --atomic $(shell git rev-parse --abbrev-ref HEAD) v$(VERSION)
 
 release_windows:
