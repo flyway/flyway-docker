@@ -32,11 +32,12 @@ RUN set -x \
 	&& apk add --no-cache openjdk8-jre="$JAVA_ALPINE_VERSION" \
 	&& [ "$JAVA_HOME" = "$(docker-java-home)" ]
 
-RUN apk --no-cache add --update bash openssl icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib \
+RUN apk --no-cache add --update bash openssl icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib g++ python3 python3-dev py3-pip \
     && wget https://dot.net/v1/dotnet-install.sh \
     && chmod +x ./dotnet-install.sh \
     && ./dotnet-install.sh -c 6.0 --runtime dotnet -InstallDir /usr/local/bin \
     && rm ./dotnet-install.sh
+RUN pip3 install sqlfluff
 
 WORKDIR /flyway
 

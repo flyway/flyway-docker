@@ -6,7 +6,8 @@ RUN curl -L https://packages.microsoft.com/config/ubuntu/21.04/packages-microsof
 RUN apt-get update \
     && apt-get install -y apt-transport-https \
     && apt-get update \
-    && apt-get install -y dotnet-runtime-6.0
+    && apt-get install -y dotnet-runtime-6.0 python3-pip
+RUN pip3 install sqlfluff
 
 WORKDIR /flyway
 
