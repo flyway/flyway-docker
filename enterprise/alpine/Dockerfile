@@ -11,9 +11,8 @@ RUN pip3 install sqlfluff
 WORKDIR /flyway
 
 ARG FLYWAY_VERSION
-ARG FLYWAY_URL=https://download.red-gate.com/maven/release/org/flywaydb/enterprise/flyway-commandline/
 
-RUN wget ${FLYWAY_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz \
+RUN wget https://download.red-gate.com/maven/release/org/flywaydb/enterprise/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && gzip -d flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && tar -xf flyway-commandline-${FLYWAY_VERSION}.tar --strip-components=1 \
   && rm flyway-commandline-${FLYWAY_VERSION}.tar \
