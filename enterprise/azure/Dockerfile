@@ -8,10 +8,13 @@ ENV JAVA_VERSION 8u275
 ENV JAVA_ALPINE_VERSION 8.275.01-r0
 
 ARG FLYWAY_VERSION
+ARG FLYWAY_URL=https://download.red-gate.com/maven/release/org/flywaydb/enterprise/flyway-commandline/
 
 RUN apk add --no-cache --virtual .pipeline-deps readline linux-pam \
-  && apk add bash sudo shadow openssl curl tar\
+  && apk add bash sudo shadow openssl curl tar gcc make python3-dev py3-pip\
   && apk del .pipeline-deps
+
+RUN pip3 install sqlfluff
 
 LABEL "com.azure.dev.pipelines.agent.handler.node.path"="/usr/local/bin/node"
 
@@ -41,7 +44,7 @@ RUN pip3 install sqlfluff
 
 WORKDIR /flyway
 
-RUN curl -L https://download.red-gate.com/maven/release/org/flywaydb/enterprise/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz -o flyway-commandline-${FLYWAY_VERSION}.tar.gz \
+RUN curl -L ${FLYWAY_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz -o flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && tar -xzf flyway-commandline-${FLYWAY_VERSION}.tar.gz --strip-components=1 \
   && rm flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && chmod -R +r /flyway \

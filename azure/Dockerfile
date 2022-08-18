@@ -8,6 +8,7 @@ ENV JAVA_VERSION 8u275
 ENV JAVA_ALPINE_VERSION 8.275.01-r0
 
 ARG FLYWAY_VERSION
+ARG FLYWAY_URL=https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 
 RUN apk add --no-cache --virtual .pipeline-deps readline linux-pam \
   && apk add bash sudo shadow openssl curl tar\
@@ -34,7 +35,7 @@ RUN set -x \
 
 WORKDIR /flyway
 
-RUN curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz -o flyway-commandline-${FLYWAY_VERSION}.tar.gz \
+RUN curl -L ${FLYWAY_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz -o flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && tar -xzf flyway-commandline-${FLYWAY_VERSION}.tar.gz --strip-components=1 \
   && rm flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && chmod -R +r /flyway \
