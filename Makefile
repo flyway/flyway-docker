@@ -10,10 +10,10 @@ update_version:
 		-e 'my $$version = $$1 if ("$(VERSION)" =~ /(\d+)\.\d+\.\d+/); s/`\d+(-(alpine|azure))?`/`$$version$$1`/g;' \
 		README.md
 
-wait_for_artifacts: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/$(VERSION)/
+wait_for_artifacts: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 wait_for_artifacts:
 	$(info Waiting for artifacts...)
-	$(BASH) -c 'until wget -q --spider --user-agent="Mozilla" $(URL) &> /dev/null; do sleep 2; done'
+	$(BASH) -c 'until wget -q --spider --user-agent="Mozilla" $(URL)$(VERSION) &> /dev/null; do sleep 2; done'
 
 build: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 build:
