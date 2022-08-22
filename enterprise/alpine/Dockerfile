@@ -6,7 +6,7 @@ RUN apk --no-cache add --update bash openssl icu-libs krb5-libs libgcc libintl l
     && chmod +x ./dotnet-install.sh \
     && ./dotnet-install.sh -c 6.0 --runtime dotnet -InstallDir /usr/local/bin \
     && rm ./dotnet-install.sh
-RUN pip3 install sqlfluff
+RUN pip3 install sqlfluff==1.2.1
 
 WORKDIR /flyway
 
