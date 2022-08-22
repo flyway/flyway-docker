@@ -7,7 +7,7 @@ RUN apt-get update \
     && apt-get install -y apt-transport-https \
     && apt-get update \
     && apt-get install -y dotnet-runtime-6.0 python3-pip
-RUN pip3 install sqlfluff
+RUN pip3 install sqlfluff==1.2.1
 
 WORKDIR /flyway
 
