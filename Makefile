@@ -17,14 +17,15 @@ wait_for_artifacts:
 
 build: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 build: EDITION = flyway
+build: PLATFORM = linux/arm/v7,linux/arm64/v8,linux/amd6
 build:
 	-docker buildx rm multi_arch_builder
 	docker buildx create --name multi_arch_builder --driver-opt network=bridge --use
-	docker buildx build --target $(EDITION) --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --pull --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) \
-	-t $(EDITION)/flyway:latest \
-	-t $(EDITION)/flyway:$(VERSION) \
-	-t $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) \
-	-t $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) .
+	docker buildx build --target $(EDITION) --platform $(PLATFORM) --pull --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) \
+	  -t $(EDITION)/flyway:latest \
+	  -t $(EDITION)/flyway:$(VERSION) \
+	  -t $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) \
+	  -t $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) .
 	docker build --target $(EDITION) --pull --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) \
 	-t $(EDITION)/flyway:latest-alpine \
 	-t $(EDITION)/flyway:$(VERSION)-alpine \
@@ -66,8 +67,9 @@ test_check:
 
 release: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 release: EDITION = flyway
+release: PLATFORM = linux/arm/v7,linux/arm64/v8,linux/amd64
 release:
-	docker buildx build --target $(EDITION) --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) \
+	docker buildx build --target $(EDITION) --push --platform $(PLATFORM) --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) \
 	-t $(EDITION)/flyway:latest \
 	-t $(EDITION)/flyway:$(VERSION) \
 	-t $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) \
