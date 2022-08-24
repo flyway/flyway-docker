@@ -1,11 +1,8 @@
-FROM eclipse-temurin:11-jre-alpine
+FROM eclipse-temurin:11-jre-alpine as community
 
 RUN apk --no-cache add --update bash openssl
 
-RUN addgroup flyway && adduser -S -h /flyway -D -G flyway flyway
 WORKDIR /flyway
-
-USER flyway
 
 ARG FLYWAY_VERSION
 ARG FLYWAY_ARTIFACT_URL=https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
@@ -21,3 +18,14 @@ ENV PATH="/flyway:${PATH}"
 
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
+
+FROM community
+
+RUN apk --no-cache add --update icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib python3 py3-pip \
+    && apk --no-cache add --update libgdiplus --repository https://dl-3.alpinelinux.org/alpine/edge/testing/ \
+    && wget https://dot.net/v1/dotnet-install.sh \
+    && chmod +x ./dotnet-install.sh \
+    && ./dotnet-install.sh -c 6.0 --runtime dotnet -InstallDir /usr/local/bin \
+    && rm ./dotnet-install.sh
+RUN apk --no-cache add --update python3 py3-pip \
+    && pip3 install sqlfluff==1.2.1
