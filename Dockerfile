@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11.0.14.1_1-jre as community
+FROM eclipse-temurin:11.0.14.1_1-jre as flyway
 
 WORKDIR /flyway
 
@@ -17,7 +17,7 @@ ENV PATH="/flyway:${PATH}"
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
 
-FROM community
+FROM flyway as redgate
 
 RUN curl -L https://packages.microsoft.com/config/ubuntu/21.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb \
   && dpkg -i packages-microsoft-prod.deb \

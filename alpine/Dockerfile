@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11-jre-alpine as community
+FROM eclipse-temurin:11-jre-alpine as flyway
 
 RUN apk --no-cache add --update bash openssl
 
@@ -19,7 +19,7 @@ ENV PATH="/flyway:${PATH}"
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
 
-FROM community
+FROM flyway as redgate
 
 RUN apk --no-cache add --update icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib python3 py3-pip \
     && apk --no-cache add --update libgdiplus --repository https://dl-3.alpinelinux.org/alpine/edge/testing/ \
