@@ -12,9 +12,9 @@ The Flyway Teams and Enterprise images are available in [redgate/flyway](https:/
 
 The following tags are officially supported:
 
-- [`9.1.6`, `9.1`, `9`, `latest` (*Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/Dockerfile)
-- [`9.1.6-alpine`, `9.1-alpine`, `9-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/alpine/Dockerfile)
-- [`9.1.6-azure`, `9.1-azure`, `9-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/azure/Dockerfile)
+- [`9.2.0`, `9.2`, `9`, `latest` (*Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/Dockerfile)
+- [`9.2.0-alpine`, `9.2-alpine`, `9-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/alpine/Dockerfile)
+- [`9.2.0-azure`, `9.2-azure`, `9-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/azure/Dockerfile)
 
 The **redgate/flyway:\*-azure** images *only* support alpine versions.
 
