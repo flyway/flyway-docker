@@ -40,12 +40,18 @@ build_windows:
     	-t redgate/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-windowsservercore ./windowsservercore
 
 test:
-	$(info Testing standard Docker image...)
-	docker run --rm $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) .) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test info
-	$(info Testing alpine Docker image...)
-	docker run --rm $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) ./alpine) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test info
-	$(info Testing azure Docker image...)
-	docker run --rm $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) ./azure) flyway -licenseKey="$(KEY)" -url=jdbc:h2:mem:test info
+	$(eval REGULAR := $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) .))
+	$(eval ALPINE := $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) ./alpine))
+	$(eval AZURE := $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) ./azure))
+	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(REGULAR) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test info
+	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(REGULAR) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test migrate
+	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(REGULAR) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test clean -cleanDisabled=false
+	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(ALPINE) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test info
+	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(ALPINE) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test migrate
+	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(ALPINE) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test clean -cleanDisabled=false
+	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(AZURE) flyway -licenseKey="$(KEY)" -url=jdbc:h2:mem:test info
+	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(AZURE) flyway -licenseKey="$(KEY)" -url=jdbc:h2:mem:test migrate
+	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(AZURE) flyway -licenseKey="$(KEY)" -url=jdbc:h2:mem:test clean -cleanDisabled=false
 
 release:
 	docker push -a redgate/flyway
