@@ -44,12 +44,15 @@ test:
 	$(eval ALPINE := $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) ./alpine))
 	$(eval AZURE := $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) ./azure))
 	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(REGULAR) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test info
+	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(REGULAR) -licenseKey="$(KEY)" -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report
 	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(REGULAR) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test migrate
 	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(REGULAR) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test clean -cleanDisabled=false
 	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(ALPINE) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test info
+	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(ALPINE) -licenseKey="$(KEY)" -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report
 	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(ALPINE) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test migrate
 	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(ALPINE) -licenseKey="$(KEY)" -url=jdbc:h2:mem:test clean -cleanDisabled=false
 	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(AZURE) flyway -licenseKey="$(KEY)" -url=jdbc:h2:mem:test info
+	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(AZURE) flyway -licenseKey="$(KEY)" -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report
 	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(AZURE) flyway -licenseKey="$(KEY)" -url=jdbc:h2:mem:test migrate
 	docker run --rm -v $(shell pwd)/../test-sql:/flyway/sql $(AZURE) flyway -licenseKey="$(KEY)" -url=jdbc:h2:mem:test clean -cleanDisabled=false
 
