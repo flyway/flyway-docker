@@ -45,18 +45,15 @@ build_windows:
 
 test: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 test:
-	$(eval REGULAR := $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) .))
-	$(eval ALPINE := $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) ./alpine))
-	$(eval AZURE := $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) ./azure))
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(REGULAR) -url=jdbc:h2:mem:test info
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(REGULAR) -url=jdbc:h2:mem:test migrate
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(REGULAR) -url=jdbc:h2:mem:test clean -cleanDisabled=false
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(ALPINE) -url=jdbc:h2:mem:test info
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(ALPINE) -url=jdbc:h2:mem:test migrate
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(ALPINE) -url=jdbc:h2:mem:test clean -cleanDisabled=false
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(AZURE) flyway -url=jdbc:h2:mem:test info
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(AZURE) flyway -url=jdbc:h2:mem:test migrate
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(AZURE) flyway -url=jdbc:h2:mem:test clean -cleanDisabled=false
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql flyway/flyway:$(VERSION) -url=jdbc:h2:mem:test info
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql flyway/flyway:$(VERSION) -url=jdbc:h2:mem:test migrate
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql flyway/flyway:$(VERSION) -url=jdbc:h2:mem:test clean -cleanDisabled=false
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql flyway/flyway:$(VERSION)-alpine -url=jdbc:h2:mem:test info
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql flyway/flyway:$(VERSION)-alpine -url=jdbc:h2:mem:test migrate
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql flyway/flyway:$(VERSION)-alpine -url=jdbc:h2:mem:test clean -cleanDisabled=false
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql flyway/flyway:$(VERSION)-azure flyway -url=jdbc:h2:mem:test info
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql flyway/flyway:$(VERSION)-azure flyway -url=jdbc:h2:mem:test migrate
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql flyway/flyway:$(VERSION)-azure flyway -url=jdbc:h2:mem:test clean -cleanDisabled=false
 
 release: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 release:
