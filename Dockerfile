@@ -1,9 +1,6 @@
-FROM eclipse-temurin:11.0.14.1_1-jre
+FROM eclipse-temurin:11.0.14.1_1-jre as flyway
 
-RUN adduser --system --home /flyway --disabled-password --group flyway
 WORKDIR /flyway
-
-USER flyway
 
 ARG FLYWAY_VERSION
 ARG FLYWAY_ARTIFACT_URL=https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
@@ -19,3 +16,15 @@ ENV PATH="/flyway:${PATH}"
 
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
+
+FROM flyway as redgate
+
+RUN curl -L https://packages.microsoft.com/config/ubuntu/21.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb \
+  && dpkg -i packages-microsoft-prod.deb \
+  && rm packages-microsoft-prod.deb
+RUN apt-get update \
+    && apt-get install -y apt-transport-https \
+    && apt-get update \
+    && apt-get install -y dotnet-runtime-6.0
+RUN apt-get install -y python3-pip \
+    && pip3 install sqlfluff==1.2.1

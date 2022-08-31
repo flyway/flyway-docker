@@ -1,7 +1,7 @@
 # Azure pipeline agents require specific things in their containers:
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops#linux-based-containers
 
-FROM node:10-alpine
+FROM node:10-alpine as flyway
 
 ENV LANG C.UTF-8
 ENV JAVA_VERSION 8u275
@@ -41,3 +41,13 @@ RUN curl -L ${FLYWAY_ARTIFACT_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_
   && chmod -R +r /flyway \
   && chmod +x /flyway/flyway \
   && ln -s /flyway/flyway /usr/local/bin/flyway
+
+FROM flyway as redgate
+
+RUN apk --no-cache add --update icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib \
+    && wget https://dot.net/v1/dotnet-install.sh \
+    && chmod +x ./dotnet-install.sh \
+    && ./dotnet-install.sh -c 6.0 --runtime dotnet -InstallDir /usr/local/bin \
+    && rm ./dotnet-install.sh
+RUN apk --no-cache add --update g++ python3 python3-dev py3-pip \
+    && pip3 install sqlfluff==1.2.1
