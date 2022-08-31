@@ -51,11 +51,10 @@ test:
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway -url=jdbc:h2:mem:test migrate $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway -url=jdbc:h2:mem:test clean -cleanDisabled=false $(EXTRA_ARGS)
 
-test_check: test
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION) -licenseKey="$(KEY)" -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-alpine -licenseKey="$(KEY)" -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway -licenseKey="$(KEY)" -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway -licenseKey="$(KEY)" -url=jdbc:h2:mem:test clean -cleanDisabled=false
+test_teams: test
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION) -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report $(EXTRA_ARGS)
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-alpine -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report $(EXTRA_ARGS)
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report $(EXTRA_ARGS)
 
 release: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 release: EDITION = flyway
