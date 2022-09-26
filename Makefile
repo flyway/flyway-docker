@@ -66,7 +66,17 @@ release:
 	-t $(EDITION)/flyway:$(VERSION) \
 	-t $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) \
 	-t $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) .
-	docker push -a $(EDITION)/flyway
+
+	docker push $(EDITION)/flyway:latest-alpine
+	docker push $(EDITION)/flyway:$(VERSION)-alpine
+	docker push $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-alpine
+	docker push $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-alpine
+
+	docker push $(EDITION)/flyway:latest-azure
+	docker push $(EDITION)/flyway:$(VERSION)-azure
+	docker push $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-azure
+	docker push $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-azure
+
 	git commit --allow-empty -a -m 'Update to $(VERSION)'
 	git tag v$(VERSION) --force
 	git push origin --atomic $(shell git rev-parse --abbrev-ref HEAD) v$(VERSION) --force
