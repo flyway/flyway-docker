@@ -1,5 +1,9 @@
 FROM eclipse-temurin:11.0.14.1_1-jre as flyway
 
+RUN apt-get update \
+    && apt-get install -y python3-pip \
+    && pip3 install sqlfluff==1.2.1
+
 WORKDIR /flyway
 
 ARG FLYWAY_VERSION
@@ -26,5 +30,3 @@ RUN apt-get update \
     && apt-get install -y apt-transport-https \
     && apt-get update \
     && apt-get install -y dotnet-runtime-6.0
-RUN apt-get install -y python3-pip \
-    && pip3 install sqlfluff==1.2.1
