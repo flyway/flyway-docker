@@ -52,7 +52,7 @@ test:
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway -url=jdbc:h2:mem:test info $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway -url=jdbc:h2:mem:test migrate $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway -url=jdbc:h2:mem:test clean -cleanDisabled=false $(EXTRA_ARGS)
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure check -code -check.reportFilename=report $(EXTRA_ARGS)
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway check -code -check.reportFilename=report $(EXTRA_ARGS)
 
 test_teams: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 test_teams: test
