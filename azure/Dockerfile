@@ -11,8 +11,10 @@ ARG FLYWAY_VERSION
 ARG FLYWAY_ARTIFACT_URL=https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 
 RUN apk add --no-cache --virtual .pipeline-deps readline linux-pam \
-  && apk add bash sudo shadow openssl curl tar\
+  && apk add bash sudo shadow openssl curl tar \
   && apk del .pipeline-deps
+RUN apk --no-cache add --update g++ python3 python3-dev py3-pip \
+    && pip3 install sqlfluff==1.2.1
 
 LABEL "com.azure.dev.pipelines.agent.handler.node.path"="/usr/local/bin/node"
 
@@ -49,5 +51,3 @@ RUN apk --no-cache add --update icu-libs krb5-libs libgcc libintl libssl1.1 libs
     && chmod +x ./dotnet-install.sh \
     && ./dotnet-install.sh -c 6.0 --runtime dotnet -InstallDir /usr/local/bin \
     && rm ./dotnet-install.sh
-RUN apk --no-cache add --update g++ python3 python3-dev py3-pip \
-    && pip3 install sqlfluff==1.2.1
