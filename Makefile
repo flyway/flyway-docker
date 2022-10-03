@@ -56,9 +56,9 @@ test:
 
 test_teams: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 test_teams: test
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(shell docker build -q --target $(EDITION) --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) .) -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report $(EXTRA_ARGS)
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-alpine -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report $(EXTRA_ARGS)
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report $(EXTRA_ARGS)
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql ${EXTRA_DOCKER_ARGS} $(shell docker build -q --target $(EDITION) --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) .) -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report $(EXTRA_ARGS)
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql ${EXTRA_DOCKER_ARGS} $(EDITION)/flyway:$(VERSION)-alpine -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report $(EXTRA_ARGS)
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql ${EXTRA_DOCKER_ARGS} $(EDITION)/flyway:$(VERSION)-azure flyway -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report $(EXTRA_ARGS)
 
 release: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 release: EDITION = flyway
