@@ -20,7 +20,8 @@ build: EDITION = flyway
 build: PLATFORM = linux/arm/v7,linux/arm64/v8,linux/amd64
 build:
 	-docker buildx rm multi_arch_builder
-	docker buildx create --name multi_arch_builder --driver-opt network=bridge --use
+	docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+	docker buildx create --name multi_arch_builder --driver docker-container --driver-opt network=bridge --use
 	docker buildx build --target $(EDITION) --platform $(PLATFORM) --pull --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) \
 	-t $(EDITION)/flyway:latest \
 	-t $(EDITION)/flyway:$(VERSION) \
