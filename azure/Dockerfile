@@ -1,11 +1,11 @@
 # Azure pipeline agents require specific things in their containers:
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops#linux-based-containers
 
-FROM node:10-alpine as flyway
+FROM node:19-alpine as flyway
 
 ENV LANG C.UTF-8
-ENV JAVA_VERSION 8u275
-ENV JAVA_ALPINE_VERSION 8.275.01-r0
+ENV JAVA_VERSION 17.0.5
+ENV JAVA_ALPINE_VERSION 17.0.5_p8-r2
 
 ARG FLYWAY_VERSION
 ARG FLYWAY_ARTIFACT_URL=https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
@@ -14,8 +14,7 @@ RUN apk add --no-cache --virtual .pipeline-deps readline linux-pam \
   && apk add bash sudo shadow openssl curl tar \
   && apk del .pipeline-deps
 RUN apk --no-cache add --update g++ python3 python3-dev py3-pip \
-    && pip3 install sqlfluff==1.2.1 \
-    && ln -s /usr/bin/pip3 /usr/bin/pip
+    && pip3 install sqlfluff==1.2.1
 
 LABEL "com.azure.dev.pipelines.agent.handler.node.path"="/usr/local/bin/node"
 
@@ -29,11 +28,11 @@ RUN { \
 	} > /usr/local/bin/docker-java-home \
 	&& chmod +x /usr/local/bin/docker-java-home
 
-ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk/jre
-ENV PATH $PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk/jre
+ENV PATH $PATH:/usr/lib/jvm/java-17-openjdk/jre/bin:/usr/lib/jvm/java-17-openjdk/bin
 
 RUN set -x \
-	&& apk add --no-cache openjdk8-jre="$JAVA_ALPINE_VERSION" \
+	&& apk add --no-cache openjdk17-jre="$JAVA_ALPINE_VERSION" \
 	&& [ "$JAVA_HOME" = "$(docker-java-home)" ]
 
 WORKDIR /flyway
