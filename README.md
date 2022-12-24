@@ -119,7 +119,7 @@ services:
     image: flyway/flyway
     command: -url=jdbc:mysql://db -schemas=myschema -user=root -password=P@ssw0rd -connectRetries=60 migrate
     volumes:
-      - .:/flyway/sql
+      - /absolute/path/to/my/sqldir:/flyway/sql
     depends_on:
       - db
   db:
