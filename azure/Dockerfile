@@ -1,7 +1,7 @@
 # Azure pipeline agents require specific things in their containers:
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops#linux-based-containers
 
-FROM node:10-alpine as flyway
+FROM node:19-alpine as flyway
 
 ENV LANG C.UTF-8
 ENV JAVA_VERSION 8u275
