@@ -14,8 +14,7 @@ RUN apk add --no-cache --virtual .pipeline-deps readline linux-pam \
   && apk add bash sudo shadow openssl curl tar \
   && apk del .pipeline-deps
 RUN apk --no-cache add --update g++ python3 python3-dev py3-pip \
-    && pip3 install sqlfluff==1.2.1 \
-    && ln -s /usr/bin/pip3 /usr/bin/pip
+    && pip3 install sqlfluff==1.2.1
 
 LABEL "com.azure.dev.pipelines.agent.handler.node.path"="/usr/local/bin/node"
 
