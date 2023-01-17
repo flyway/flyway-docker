@@ -17,11 +17,23 @@ RUN apk --no-cache add --update g++ python3 python3-dev py3-pip \
     && pip3 install sqlfluff==1.2.1
 
 LABEL "com.azure.dev.pipelines.agent.handler.node.path"="/usr/local/bin/node"
+
+# Add a simple script that can auto-detect the appropriate JAVA_HOME value
+# based on whether the JDK or only the JRE is installed
+RUN { \
+		echo '#!/bin/sh'; \
+		echo 'set -e'; \
+		echo; \
+		echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
+	} > /usr/local/bin/docker-java-home \
+	&& chmod +x /usr/local/bin/docker-java-home
+
 ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk
-ENV PATH $PATH:/usr/lib/jvm/java-17-openjdk/bin
+ENV PATH $PATH:/usr/lib/jvm/java-17-openjdk/jre/bin:/usr/lib/jvm/java-17-openjdk/bin
 
 RUN set -x \
-	&& apk add --no-cache openjdk17-jre="$JAVA_ALPINE_VERSION"
+	&& apk add --no-cache openjdk17-jre="$JAVA_ALPINE_VERSION" \
+	&& [ "$JAVA_HOME" = "$(docker-java-home)" ]
 
 WORKDIR /flyway
 
