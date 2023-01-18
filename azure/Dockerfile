@@ -4,8 +4,8 @@
 FROM node:19-alpine as flyway
 
 ENV LANG C.UTF-8
-ENV JAVA_VERSION 8u345
-ENV JAVA_ALPINE_VERSION 8.345.01-r3
+ENV JAVA_VERSION 17.0.5
+ENV JAVA_ALPINE_VERSION 17.0.5_p8-r2
 
 ARG FLYWAY_VERSION
 ARG FLYWAY_ARTIFACT_URL=https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
@@ -28,11 +28,11 @@ RUN { \
 	} > /usr/local/bin/docker-java-home \
 	&& chmod +x /usr/local/bin/docker-java-home
 
-ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
-ENV PATH $PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk
+ENV PATH $PATH:/usr/lib/jvm/java-17-openjdk/jre/bin:/usr/lib/jvm/java-17-openjdk/bin
 
 RUN set -x \
-	&& apk add --no-cache openjdk8-jre="$JAVA_ALPINE_VERSION" \
+	&& apk add --no-cache openjdk17-jre="$JAVA_ALPINE_VERSION" \
 	&& [ "$JAVA_HOME" = "$(docker-java-home)" ]
 
 WORKDIR /flyway
