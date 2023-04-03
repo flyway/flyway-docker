@@ -22,17 +22,17 @@ build:
 	-docker buildx rm multi_arch_builder
 	docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 	docker buildx create --name multi_arch_builder --driver docker-container --driver-opt network=bridge --use
-	docker buildx build --target $(EDITION) --platform $(PLATFORM) --pull --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) \
+	docker buildx build --platform $(PLATFORM) --pull --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) \
 	-t $(EDITION)/flyway:latest \
 	-t $(EDITION)/flyway:$(VERSION) \
 	-t $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) \
 	-t $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) .
-	docker build --target $(EDITION) --pull --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) \
+	docker build --pull --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) \
 	-t $(EDITION)/flyway:latest-alpine \
 	-t $(EDITION)/flyway:$(VERSION)-alpine \
 	-t $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-alpine \
 	-t $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,1,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-alpine ./alpine
-	docker build --target $(EDITION) --pull --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) \
+	docker build --pull --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) \
 	-t $(EDITION)/flyway:latest-azure \
 	-t $(EDITION)/flyway:$(VERSION)-azure \
 	-t $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION)))-azure \
@@ -41,7 +41,7 @@ build:
 test: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 test: EDITION = flyway
 test:
-	$(eval REGULAR := $(shell docker build -q --target $(EDITION) --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) .))
+	$(eval REGULAR := $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) .))
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(REGULAR) -url=jdbc:h2:mem:test info $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(REGULAR) -url=jdbc:h2:mem:test migrate $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(REGULAR) -url=jdbc:h2:mem:test clean -cleanDisabled=false $(EXTRA_ARGS)
@@ -57,7 +57,7 @@ test:
 
 test_teams: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 test_teams: test
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql ${EXTRA_DOCKER_ARGS} $(shell docker build -q --target $(EDITION) --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) .) -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report $(EXTRA_ARGS)
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql ${EXTRA_DOCKER_ARGS} $(shell docker build -q --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) .) -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql ${EXTRA_DOCKER_ARGS} $(EDITION)/flyway:$(VERSION)-alpine -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql ${EXTRA_DOCKER_ARGS} $(EDITION)/flyway:$(VERSION)-azure flyway -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -check.reportFilename=report $(EXTRA_ARGS)
 
@@ -65,7 +65,7 @@ release: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 release: EDITION = flyway
 release: PLATFORM = linux/arm/v7,linux/arm64/v8,linux/amd64
 release:
-	docker buildx build --target $(EDITION) --push --platform $(PLATFORM) --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) \
+	docker buildx build --push --platform $(PLATFORM) --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) \
 	-t $(EDITION)/flyway:latest \
 	-t $(EDITION)/flyway:$(VERSION) \
 	-t $(EDITION)/flyway:$(subst $S,.,$(wordlist 1,2,$(subst .,$S,$(subst -,$S,$(VERSION)))))$(wordlist 2,2,$(subst -,$S-,$(VERSION))) \

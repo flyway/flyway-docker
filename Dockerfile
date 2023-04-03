@@ -20,13 +20,3 @@ ENV PATH="/flyway:${PATH}"
 
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
-
-FROM flyway as redgate
-
-RUN curl -L https://packages.microsoft.com/config/ubuntu/21.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb \
-  && dpkg -i packages-microsoft-prod.deb \
-  && rm packages-microsoft-prod.deb
-RUN apt-get update \
-    && apt-get install -y apt-transport-https \
-    && apt-get update \
-    && apt-get install -y dotnet-runtime-6.0

@@ -20,7 +20,3 @@ ENV PATH="/flyway:${PATH}"
 
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
-
-FROM flyway as redgate
-
-RUN apk --no-cache add --update dotnet6-runtime
