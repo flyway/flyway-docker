@@ -37,9 +37,9 @@ RUN set -x \
 
 WORKDIR /flyway
 
-RUN curl -L ${FLYWAY_ARTIFACT_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz -o flyway-commandline-${FLYWAY_VERSION}.tar.gz \
-  && tar -xzf flyway-commandline-${FLYWAY_VERSION}.tar.gz --strip-components=1 \
-  && rm flyway-commandline-${FLYWAY_VERSION}.tar.gz \
+RUN curl -L ${FLYWAY_ARTIFACT_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz -o flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz \
+  && tar -xzf flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz --strip-components=1 \
+  && rm flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz \
   && chmod -R +r /flyway \
   && chmod +x /flyway/flyway \
   && ln -s /flyway/flyway /usr/local/bin/flyway
