@@ -28,18 +28,11 @@ RUN { \
 	} > /usr/local/bin/docker-java-home \
 	&& chmod +x /usr/local/bin/docker-java-home
 
-ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk
-ENV PATH $PATH:/usr/lib/jvm/java-17-openjdk/jre/bin:/usr/lib/jvm/java-17-openjdk/bin
-
-RUN set -x \
-	&& apk add --no-cache openjdk17-jre="$JAVA_ALPINE_VERSION" \
-	&& [ "$JAVA_HOME" = "$(docker-java-home)" ]
-
 WORKDIR /flyway
 
-RUN curl -L ${FLYWAY_ARTIFACT_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz -o flyway-commandline-${FLYWAY_VERSION}.tar.gz \
-  && tar -xzf flyway-commandline-${FLYWAY_VERSION}.tar.gz --strip-components=1 \
-  && rm flyway-commandline-${FLYWAY_VERSION}.tar.gz \
+RUN curl -L ${FLYWAY_ARTIFACT_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz -o flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz \
+  && tar -xzf flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz --strip-components=1 \
+  && rm flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz \
   && chmod -R +r /flyway \
   && chmod +x /flyway/flyway \
   && ln -s /flyway/flyway /usr/local/bin/flyway
