@@ -20,3 +20,7 @@ ENV PATH="/flyway:${PATH}"
 
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
+
+FROM flyway as redgate
+
+RUN apk add --no-cache ca-certificates krb5-libs libgcc libintl libssl3 libstdc++ zlib
