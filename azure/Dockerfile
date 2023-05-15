@@ -37,6 +37,6 @@ RUN curl -L ${FLYWAY_ARTIFACT_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_
   && chmod +x /flyway/flyway \
   && ln -s /flyway/flyway /usr/local/bin/flyway
 
-  FROM flyway as redgate
+FROM flyway as redgate
 
-  RUN apk add --no-cache ca-certificates krb5-libs libgcc libintl libssl3 libstdc++ zlib
+RUN apk add --no-cache ca-certificates krb5-libs libgcc libintl libssl3 libstdc++ zlib
