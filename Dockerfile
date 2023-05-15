@@ -24,4 +24,4 @@ CMD ["-?"]
 FROM flyway as redgate
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates libc6 libgcc1 libgssapi-krb5-2 libicu67 libssl1.1 libstdc++6 zlib1g
+    && apt-get install -y --no-install-recommends ca-certificates libc6 libgcc1 libgssapi-krb5-2 libicu66 libssl1.1 libstdc++6 zlib1g
