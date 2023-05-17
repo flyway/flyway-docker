@@ -1,7 +1,7 @@
 FROM eclipse-temurin:17-jre-focal as flyway
 
 RUN apt-get update \
-    && apt-get install -y python3-pip \
+    && apt-get install -y python3-pip=20.0.* \ 
     && pip3 install sqlfluff==1.2.1
 
 WORKDIR /flyway
@@ -27,6 +27,6 @@ RUN curl -L https://packages.microsoft.com/config/ubuntu/21.04/packages-microsof
   && dpkg -i packages-microsoft-prod.deb \
   && rm packages-microsoft-prod.deb
 RUN apt-get update \
-    && apt-get install -y apt-transport-https \
+    && apt-get install -y apt-transport-https=2.0.* \ 
     && apt-get update \
     && apt-get install -y dotnet-runtime-6.0
