@@ -39,4 +39,4 @@ RUN curl -L ${FLYWAY_ARTIFACT_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_
 
 FROM flyway as redgate
 
-RUN apk add --no-cache ca-certificates icu-libs krb5-libs libgcc libintl libssl3 libstdc++ zlib icu
+RUN apk add --no-cache icu-libs krb5-libs libgcc libintl libssl3 libstdc++ zlib icu
