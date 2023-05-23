@@ -23,4 +23,4 @@ CMD ["-?"]
 
 FROM flyway as redgate
 
-RUN apk --no-cache add --update dotnet6-runtime
+RUN apk add --no-cache icu-libs krb5-libs libgcc libintl libssl3 libstdc++ zlib
