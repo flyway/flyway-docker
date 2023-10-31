@@ -45,18 +45,18 @@ test:
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(REGULAR) -url=jdbc:h2:mem:test info $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(REGULAR) -url=jdbc:h2:mem:test migrate $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(REGULAR) -url=jdbc:h2:mem:test clean -cleanDisabled=false $(EXTRA_ARGS)
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(REGULAR) check -code -reportFilename=report $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-alpine -url=jdbc:h2:mem:test info $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-alpine -url=jdbc:h2:mem:test migrate $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-alpine -url=jdbc:h2:mem:test clean -cleanDisabled=false $(EXTRA_ARGS)
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-alpine check -code -reportFilename=report $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway -url=jdbc:h2:mem:test info $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway -url=jdbc:h2:mem:test migrate $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway -url=jdbc:h2:mem:test clean -cleanDisabled=false $(EXTRA_ARGS)
-	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway check -code -reportFilename=report $(EXTRA_ARGS)
 
 test_teams: URL = https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 test_teams: test
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-azure flyway check -code -reportFilename=report $(EXTRA_ARGS)
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(EDITION)/flyway:$(VERSION)-alpine check -code -reportFilename=report $(EXTRA_ARGS)
+	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql $(REGULAR) check -code -reportFilename=report $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql ${EXTRA_DOCKER_ARGS} $(shell docker build -q --target $(EDITION) --build-arg FLYWAY_VERSION=$(VERSION) --build-arg FLYWAY_ARTIFACT_URL=$(URL) .) -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -reportFilename=report $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql ${EXTRA_DOCKER_ARGS} $(EDITION)/flyway:$(VERSION)-alpine -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -reportFilename=report $(EXTRA_ARGS)
 	docker run --rm -v $(shell pwd)/test-sql:/flyway/sql ${EXTRA_DOCKER_ARGS} $(EDITION)/flyway:$(VERSION)-azure flyway -url=jdbc:sqlite:test check -changes -code -check.buildUrl=jdbc:sqlite:temp -reportFilename=report $(EXTRA_ARGS)
