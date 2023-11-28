@@ -4,8 +4,8 @@
 FROM node:19-alpine as flyway
 
 ENV LANG C.UTF-8
-ENV JAVA_VERSION 17.0.6
-ENV JAVA_ALPINE_VERSION 17.0.6_p10-r0
+ENV JAVA_VERSION 21.0.1
+ENV JAVA_ALPINE_VERSION 21.0.1_p12-r0
 
 ARG FLYWAY_VERSION
 ARG FLYWAY_ARTIFACT_URL=https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
