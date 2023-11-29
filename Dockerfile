@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jre-jammy as flyway
+FROM eclipse-temurin:17-jre-focal as flyway
 
 RUN apt-get update \
     && apt-get install -y python3-pip \
