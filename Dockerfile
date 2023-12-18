@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jre-focal as flyway
+FROM eclipse-temurin:17-jre-jammy as flyway
 
 WORKDIR /flyway
 
@@ -21,5 +21,6 @@ FROM flyway as redgate
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends python3-pip \
-    && apt-get install -y --no-install-recommends libc6 libgcc1 libgssapi-krb5-2 libicu66 libssl1.1 libstdc++6 zlib1g \
+    && apt-get install -y --no-install-recommends libc6 libgcc1 libgcc-s1 libgssapi-krb5-2 libicu70 liblttng-ust1 libssl3 libstdc++6 libunwind8 zlib1g \
     && pip3 install sqlfluff==1.2.1
+    
