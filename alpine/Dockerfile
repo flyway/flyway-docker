@@ -1,8 +1,6 @@
 FROM eclipse-temurin:17-jre-alpine as flyway
 
 RUN apk --no-cache add --update bash openssl
-RUN apk --no-cache add --update python3 py3-pip \
-    && pip3 install sqlfluff==1.2.1
 
 WORKDIR /flyway
 
@@ -23,4 +21,6 @@ CMD ["-?"]
 
 FROM flyway as redgate
 
-RUN apk add --no-cache icu-libs krb5-libs libgcc libintl libssl3 libstdc++ zlib
+RUN apk add --no-cache icu-libs krb5-libs libgcc libintl libssl3 libstdc++ zlib \
+    && apk --no-cache add --update python3 py3-pip \
+    && pip3 install sqlfluff==1.2.1

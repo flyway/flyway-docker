@@ -13,8 +13,6 @@ ARG FLYWAY_ARTIFACT_URL=https://repo1.maven.org/maven2/org/flywaydb/flyway-comma
 RUN apk add --no-cache --virtual .pipeline-deps readline linux-pam \
   && apk add bash sudo shadow openssl curl tar \
   && apk del .pipeline-deps
-RUN apk --no-cache add --update g++ python3 python3-dev py3-pip \
-    && pip3 install sqlfluff==1.2.1
 
 LABEL "com.azure.dev.pipelines.agent.handler.node.path"="/usr/local/bin/node"
 
@@ -39,4 +37,6 @@ RUN curl -L ${FLYWAY_ARTIFACT_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_
 
 FROM flyway as redgate
 
-RUN apk add --no-cache icu-libs krb5-libs libgcc libintl libssl3 libstdc++ zlib icu
+RUN apk add --no-cache icu-libs krb5-libs libgcc libintl libssl3 libstdc++ zlib icu \
+  && apk --no-cache add --update g++ python3 python3-dev py3-pip \
+  && pip3 install sqlfluff==1.2.1
