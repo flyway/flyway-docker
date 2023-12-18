@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jre-focal as flyway
+FROM eclipse-temurin:17-jre-jammy as flyway
 
 WORKDIR /flyway
 
