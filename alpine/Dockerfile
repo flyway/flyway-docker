@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jre-alpine as flyway
+FROM eclipse-temurin:17.0.9_9-jre-alpine as flyway
 
 RUN apk --no-cache add --update bash openssl
 
