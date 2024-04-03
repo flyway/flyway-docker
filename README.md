@@ -12,9 +12,9 @@ The Flyway Community images are available in [flyway/flyway](https://hub.docker.
 
 The following tags are officially supported:
 
-- [`10.10.0`, `10.10`, `10`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
-- [`10.10.0-alpine`, `10.10-alpine`, `10-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
-- [`10.10.0-azure`, `10.10-azure`, `10-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/azure/Dockerfile)
+- [`10.11.0`, `10.11`, `10`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
+- [`10.11.0-alpine`, `10.11-alpine`, `10-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
+- [`10.11.0-azure`, `10.11-azure`, `10-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/azure/Dockerfile)
 
 The **flyway/flyway:\*-azure** images *only* support alpine versions.
 
