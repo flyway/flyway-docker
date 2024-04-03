@@ -3,10 +3,10 @@ FROM eclipse-temurin:17-jre-jammy as flyway
 WORKDIR /flyway
 
 ARG FLYWAY_VERSION
-ARG FLYWAY_ARTIFACT_URL=https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 
-RUN curl -L ${FLYWAY_ARTIFACT_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz -o flyway-commandline-${FLYWAY_VERSION}.tar.gz \
-  && gzip -d flyway-commandline-${FLYWAY_VERSION}.tar.gz \
+COPY flyway-commandline-${FLYWAY_VERSION}.tar.gz .
+
+RUN gzip -d flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && tar -xf flyway-commandline-${FLYWAY_VERSION}.tar --strip-components=1 \
   && rm flyway-commandline-${FLYWAY_VERSION}.tar \
   && chmod -R a+r /flyway \

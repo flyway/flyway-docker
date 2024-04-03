@@ -5,11 +5,11 @@ import time
 
 
 def get_repo_url(edition, version):
-    if edition == "oss":
+    if edition == "flyway":
         return f'https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/{version}/flyway-commandline-{version}.tar.gz'
     if edition == "redgate":
         return f'https://download.red-gate.com/maven/release/org/flywaydb/enterprise/flyway-commandline/{version}/flyway-commandline-{version}.tar.gz'
-    print("Edition should be 'oss' or 'redgate'")
+    print("Edition should be 'flyway' or 'redgate'")
     exit(1)
     
 
