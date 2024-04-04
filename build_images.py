@@ -20,7 +20,8 @@ def get_buildx_command(edition, platforms, version, tag_suffix, folder):
 def get_build_command(edition, version, tag_suffix, folder):
     command = f'docker build --target {edition} --pull --build-arg FLYWAY_VERSION={version} '
     command += get_tag_flags(version, edition, tag_suffix)
-    return command + folder
+    file_flag = f'-f {folder}/Dockerfile '
+    return command + file_flag + "."
     
 
 if __name__ == "__main__":
@@ -39,4 +40,5 @@ if __name__ == "__main__":
     commands.append(get_build_command(edition, version, "-azure", "./azure"))
     
     for command in commands:
+        print(f'Running docker build command: {command}')
         os.system(command)
