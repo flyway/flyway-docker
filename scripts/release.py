@@ -1,4 +1,5 @@
-from build_images import get_buildx_command, get_tags
+import utils
+from build_images import get_buildx_command
 import subprocess
 import sys
 
@@ -15,13 +16,13 @@ if __name__ == "__main__":
     tags = []
     if edition == "flyway":
         # Multi-arch images are pushed using the buildx command
-        release_commands.append(get_buildx_command(edition, "linux/arm/v7,linux/arm64/v8,linux/amd64", version, "", ".", True))
-        tags.extend(get_tags(version, "-alpine"))
-        tags.extend(get_tags(version, "-azure"))
+        release_commands.append(get_buildx_command(edition, version, "", ".", True))
+        tags.extend(utils.generate_tags(version, "-alpine"))
+        tags.extend(utils.generate_tags(version, "-azure"))
     else:
-        tags.extend(get_tags(version, ""))
-        tags.extend(get_tags(version, "-alpine"))
-        tags.extend(get_tags(version, "-azure"))
+        tags.extend(utils.generate_tags(version, ""))
+        tags.extend(utils.generate_tags(version, "-alpine"))
+        tags.extend(utils.generate_tags(version, "-azure"))
 
     release_commands.extend([get_push_command(edition, tag) for tag in tags])
 

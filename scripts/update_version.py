@@ -1,6 +1,6 @@
 import sys
 import re
-import version_utils
+import utils
 
 
 def validate_version(version_number):
@@ -10,8 +10,8 @@ def validate_version(version_number):
         
         
 def update_versions_in_readme(version_number):
-    minor_version = version_utils.get_major_and_minor_version(version_number)
-    major_version = version_utils.get_major_version(version_number)
+    minor_version = utils.get_major_and_minor_version(version_number)
+    major_version = utils.get_major_version(version_number)
     
     readme_file = open("./README.md", 'r')
     readme_content = readme_file.read()
