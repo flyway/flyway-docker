@@ -32,5 +32,7 @@ if __name__ == "__main__":
         for flyway_command in flyway_commands:
             run_command = f'docker run --rm -v "{test_sql_path}:/flyway/sql" {image} {flyway} {flyway_command} {flyway_cli_params}'
             print(run_command)
-            subprocess.run(run_command)
+            result = subprocess.run(run_command)
+            if result.returncode != 0:
+                exit(result.returncode)
         
