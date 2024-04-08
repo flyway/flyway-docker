@@ -3,16 +3,24 @@ import version_utils
 import os
 
 
-def get_tag_flags(version, edition, tag_suffix):
+def get_tags(version, tag_suffix):
     tags = ["latest", version, version_utils.get_major_and_minor_version(version), version_utils.get_major_version(version)]
+    return [t + tag_suffix for t in tags]
+
+
+def get_tag_flags(version, edition, tag_suffix):
+    tags = get_tags(version, tag_suffix)
     command_flags = ""
     for tag in tags:
-        command_flags += f'-t {edition}/flyway:{tag}{tag_suffix} '
+        command_flags += f'-t {edition}/flyway:{tag} '
     return command_flags
 
 
-def get_buildx_command(edition, platforms, version, tag_suffix, folder):
-    command = f'docker buildx build --target {edition} --platform {platforms} --pull --build-arg FLYWAY_VERSION={version} '
+def get_buildx_command(edition, platforms, version, tag_suffix, folder, push=False):
+    pull_or_push = "pull"
+    if push:
+        pull_or_push = "push"
+    command = f'docker buildx build --target {edition} --platform {platforms} --{pull_or_push} --build-arg FLYWAY_VERSION={version} '
     command += get_tag_flags(version, edition, tag_suffix)
     return command + folder
     
