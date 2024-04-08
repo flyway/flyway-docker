@@ -45,4 +45,4 @@ if __name__ == "__main__":
     
     for command in commands:
         print(f'Running docker build command: {command}')
-        subprocess.run(command)
+        subprocess.run(command, check=True)
