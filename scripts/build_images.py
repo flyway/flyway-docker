@@ -1,6 +1,6 @@
 import sys
 import version_utils
-import os
+import subprocess
 
 
 def get_tags(version, tag_suffix):
@@ -50,4 +50,4 @@ if __name__ == "__main__":
     
     for command in commands:
         print(f'Running docker build command: {command}')
-        os.system(command)
+        subprocess.run(command)
