@@ -40,3 +40,5 @@ FROM flyway as redgate
 RUN apk add --no-cache icu-libs krb5-libs libgcc libintl libssl3 libstdc++ zlib icu \
   && apk --no-cache add --update g++ python3 python3-dev py3-pip \
   && pip3 install sqlfluff==1.2.1
+
+LABEL org.opencontainers.image.version ${FLYWAY_VERSION}
