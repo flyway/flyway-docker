@@ -13,12 +13,13 @@ RUN curl -L ${FLYWAY_ARTIFACT_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_
   && chmod a+x /flyway/flyway
 
 ENV PATH="/flyway:${PATH}"
-ENV REDGATE_DOCKER=true
 
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
 
 FROM flyway as redgate
+
+ENV REDGATE_DOCKER=true
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends python3-pip \
