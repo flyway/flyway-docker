@@ -13,6 +13,7 @@ RUN curl -L ${FLYWAY_ARTIFACT_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_
   && chmod a+x /flyway/flyway
 
 ENV PATH="/flyway:${PATH}"
+ENV REDGATE_DOCKER=true
 
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
