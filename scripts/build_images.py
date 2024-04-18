@@ -34,7 +34,7 @@ if __name__ == "__main__":
     
     commands = []
     if edition == "flyway":  # We only do multi-arch builds for OSS due to compatibility issues with Redgate Compare
-        commands.append("docker buildx rm multi_arch_builder")
+        subprocess.run("docker buildx rm multi_arch_builder", shell=True)
         commands.append("docker run --rm --privileged multiarch/qemu-user-static --reset -p yes")
         commands.append("docker buildx create --name multi_arch_builder --driver docker-container --driver-opt network=bridge --use")
         commands.append(get_buildx_command(edition, version, "", "."))
