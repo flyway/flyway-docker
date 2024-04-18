@@ -28,4 +28,4 @@ if __name__ == "__main__":
 
     for command in release_commands:
         print(command)
-        subprocess.run(command)
+        subprocess.run(command, check=True, shell=True)
