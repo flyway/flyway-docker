@@ -14,7 +14,8 @@ RUN curl -L ${FLYWAY_ARTIFACT_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_
 
 ENV PATH="/flyway:${PATH}"
 
-ENTRYPOINT ["flyway"]
+ADD ./entrypoint.sh /flyway/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
 CMD ["-?"]
 
 FROM flyway as redgate
