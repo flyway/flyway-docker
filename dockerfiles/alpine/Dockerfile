@@ -5,12 +5,12 @@ RUN apk --no-cache add --update bash openssl
 WORKDIR /flyway
 
 ARG FLYWAY_VERSION
-ARG FLYWAY_ARTIFACT_URL=https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/
 
-RUN wget ${FLYWAY_ARTIFACT_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz \
-  && gzip -d flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz \
-  && tar -xf flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar --strip-components=1 \
-  && rm flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar \
+COPY flyway-commandline-${FLYWAY_VERSION}.tar.gz .
+
+RUN gzip -d flyway-commandline-${FLYWAY_VERSION}.tar.gz \
+  && tar -xf flyway-commandline-${FLYWAY_VERSION}.tar --strip-components=1 \
+  && rm flyway-commandline-${FLYWAY_VERSION}.tar \
   && chmod -R a+r /flyway \
   && chmod a+x /flyway/flyway
 

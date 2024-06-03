@@ -16,20 +16,11 @@ RUN apk add --no-cache --virtual .pipeline-deps readline linux-pam \
 
 LABEL "com.azure.dev.pipelines.agent.handler.node.path"="/usr/local/bin/node"
 
-# Add a simple script that can auto-detect the appropriate JAVA_HOME value
-# based on whether the JDK or only the JRE is installed
-RUN { \
-		echo '#!/bin/sh'; \
-		echo 'set -e'; \
-		echo; \
-		echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
-	} > /usr/local/bin/docker-java-home \
-	&& chmod +x /usr/local/bin/docker-java-home
-
 WORKDIR /flyway
 
-RUN curl -L ${FLYWAY_ARTIFACT_URL}${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz -o flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz \
-  && tar -xzf flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz --strip-components=1 \
+COPY flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz .
+
+RUN tar -xzf flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz --strip-components=1 \
   && rm flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz \
   && chmod -R +r /flyway \
   && chmod +x /flyway/flyway \
