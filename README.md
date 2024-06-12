@@ -8,16 +8,6 @@ This is the official repository for [Flyway Command-line](https://flywaydb.org/d
 
 The Flyway Community images are available in [flyway/flyway](https://hub.docker.com/r/flyway/flyway/) on Dockerhub.
 
-## Supported Tags
-
-The following tags are officially supported:
-
-- [`10.15.0`, `10.15`, `10`, `latest` (*Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/Dockerfile)
-- [`10.15.0-alpine`, `10.15-alpine`, `10-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/alpine/Dockerfile)
-- [`10.15.0-azure`, `10.15-azure`, `10-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/flyway/flyway-docker/blob/master/azure/Dockerfile)
-
-The **flyway/flyway:\*-azure** images *only* support alpine versions.
-
 ## Supported Volumes
 
 To make it easy to run Flyway the way you want to, the following volumes are supported:
