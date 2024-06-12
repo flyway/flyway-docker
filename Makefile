@@ -1,6 +1,3 @@
-update_version:
-	python ./scripts/update_version.py $(VERSION)
-
 get_artifacts:
 	python ./scripts/download_artifacts.py $(EDITION) $(VERSION)
 	
