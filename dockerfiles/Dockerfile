@@ -1,4 +1,7 @@
-FROM eclipse-temurin:17-jre-jammy as flyway
+##################################################
+# Step 1 - unpack Flyway
+##################################################
+FROM eclipse-temurin:17-jre-jammy 
 
 WORKDIR /flyway
 
@@ -12,11 +15,25 @@ RUN gzip -d flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && chmod -R a+r /flyway \
   && chmod a+x /flyway/flyway
 
+##################################################
+# Step 1 - Build production flyway image
+##################################################
+FROM eclipse-temurin:17-jre-jammy as flyway
+
+WORKDIR /flyway
+
+ARG FLYWAY_VERSION
+
+COPY --from=unpack /flyway /flyway
+
 ENV PATH="/flyway:${PATH}"
 
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
 
+##################################################
+# Step 1 - Build production redgate image
+##################################################
 FROM flyway as redgate
 
 ENV REDGATE_DOCKER=true
