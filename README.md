@@ -8,9 +8,9 @@ The Flyway Community, Teams and Enterprise editions are available in [redgate/fl
 
 Flyway Pipelines isn't available in this version - please use Flyway Community at [redgate/flyway](https://hub.docker.com/r/redgate/flyway/) if you want to use this feature of Flyway.
 
-## Supported Volumes
+## Suggested Project Structure
 
-To make it easy to run Flyway the way you want to, you can use the following folders in your Flyway project folder
+To make it easy to run Flyway the way you want to, you can use the following folders in your Flyway project
 
 Volume            | Usage
 ------------------|------
