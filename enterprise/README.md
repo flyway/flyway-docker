@@ -9,7 +9,7 @@ To make it easy to run Flyway the way you want to, you can use the following fol
 
 Folder            | Usage
 ------------------|------
-`/conf`    | Directory containing a `flyway.[conf|toml]` [configuration file](https://documentation.red-gate.com/fd/configuration-files-224003079.html)
+`/conf`    | Directory containing a `flyway.conf/toml` [configuration file](https://documentation.red-gate.com/fd/configuration-files-224003079.html)
 `/drivers` | Directory containing the [JDBC driver for your database](https://documentation.red-gate.com/fd/command-line-184127404.html#jdbc-drivers)
 `/sql`     | The SQL files that you want Flyway to use (for [SQL-based migrations](https://documentation.red-gate.com/fd/migrations-184127470.html#sql-based-migrations))
 `/jars`    | The jars files that you want Flyway to use (for [Java-based migrations](https://documentation.red-gate.com/fd/migrations-184127470.html#java-based-migrations))
