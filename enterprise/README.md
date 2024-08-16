@@ -1,22 +1,10 @@
-# Official Flyway Teams and Enterprise Docker images
-
-[![Docker Auto Build](https://img.shields.io/docker/cloud/automated/redgate/flyway)][docker]
+# Official Redgate Flyway Community, Teams and Enterprise Docker images
 
 [docker]: https://hub.docker.com/r/redgate/flyway/
 
 This is the official repository for [Flyway Command-line](https://flywaydb.org/documentation/usage/commandline/) images.
 
 The Flyway Teams and Enterprise images are available in [redgate/flyway](https://hub.docker.com/r/redgate/flyway/) on Dockerhub.
-
-## Supported Tags
-
-The following tags are officially supported:
-
-- [`9.2.1`, `9.2`, `9`, `latest` (*Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/Dockerfile)
-- [`9.2.1-alpine`, `9.2-alpine`, `9-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/alpine/Dockerfile)
-- [`9.2.1-azure`, `9.2-azure`, `9-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/azure/Dockerfile)
-
-The **redgate/flyway:\*-azure** images *only* support alpine versions.
 
 ## Supported Volumes
 
@@ -45,6 +33,21 @@ Note that the syntax for **redgate/flyway:\*-azure** is slightly different in or
 agent job requirements. As it does not define an entrypoint, you need to explicitly add the `flyway` command. For example:
 
 `docker run --rm redgate/flyway:latest-azure flyway`
+
+## Flyway Pipelines 
+
+To learn more about Flyway Pipelines you can access our [official documentation](https://documentation.red-gate.com/fd/introducing-flyway-pipelines-251363987.html)
+
+You can access the Flyway Pipelines service here:  https://flyway.red-gate.com/ 
+
+To use Flyway Pipelines, you will need a [Personal Access Token](https://documentation.red-gate.com/fd/personal-access-tokens-251363983.html). 
+
+### Example 
+
+To use the Flyway service on your image, include the following: 
+```
+docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf redgate/flyway migrate –publishResults=true –email=<E-mailLinkedToRedgateAccount> -token=<InsertPATokenHere>
+```
 
 ## Adding SQL files
 
