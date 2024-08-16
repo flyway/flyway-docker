@@ -1,33 +1,18 @@
-# Official Flyway Teams and Enterprise Docker images
+# Official Flyway Community, Teams and Enterprise Docker images
 
-[![Docker Auto Build](https://img.shields.io/docker/cloud/automated/redgate/flyway)][docker]
+This is the official repository for [Flyway Command-line](https://documentation.red-gate.com/fd/welcome-to-flyway-184127914.html) images.
 
-[docker]: https://hub.docker.com/r/redgate/flyway/
 
-This is the official repository for [Flyway Command-line](https://flywaydb.org/documentation/usage/commandline/) images.
+## Suggested Project Structure
 
-The Flyway Teams and Enterprise images are available in [redgate/flyway](https://hub.docker.com/r/redgate/flyway/) on Dockerhub.
+To make it easy to run Flyway the way you want to, you can use the following folders in your Flyway project
 
-## Supported Tags
-
-The following tags are officially supported:
-
-- [`9.2.1`, `9.2`, `9`, `latest` (*Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/Dockerfile)
-- [`9.2.1-alpine`, `9.2-alpine`, `9-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/alpine/Dockerfile)
-- [`9.2.1-azure`, `9.2-azure`, `9-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/azure/Dockerfile)
-
-The **redgate/flyway:\*-azure** images *only* support alpine versions.
-
-## Supported Volumes
-
-To make it easy to run Flyway the way you want to, the following volumes are supported:
-
-Volume            | Usage
+Folder            | Usage
 ------------------|------
-`/flyway/conf`    | Directory containing a `flyway.conf` [configuration file](https://flywaydb.org/documentation/usage/commandline/#configuration)
-`/flyway/drivers` | Directory containing the [JDBC driver for your database](https://flywaydb.org/documentation/usage/commandline/#jdbc-drivers)
-`/flyway/sql`     | The SQL files that you want Flyway to use (for [SQL-based migrations](https://flywaydb.org/documentation/concepts/migrations#sql-based-migrations))
-`/flyway/jars`    | The jars files that you want Flyway to use (for [Java-based migrations](https://flywaydb.org/documentation/concepts/migrations#java-based-migrations))
+`/conf`    | Directory containing a `flyway.conf/toml` [configuration file](https://documentation.red-gate.com/fd/configuration-files-224003079.html)
+`/drivers` | Directory containing the [JDBC driver for your database](https://documentation.red-gate.com/fd/command-line-184127404.html#jdbc-drivers)
+`/sql`     | The SQL files that you want Flyway to use (for [SQL-based migrations](https://documentation.red-gate.com/fd/migrations-184127470.html#sql-based-migrations))
+`/jars`    | The jars files that you want Flyway to use (for [Java-based migrations](https://documentation.red-gate.com/fd/migrations-184127470.html#java-based-migrations))
 
 ## Getting started
 
@@ -39,20 +24,34 @@ This will give you Flyway Command-line's usage instructions.
 
 To do anything useful however, you must pass the arguments that you need to the image. For example:
 
-`docker run --rm redgate/flyway -licenseKey="FL01..." -url=jdbc:h2:mem:test -user=sa info`
+`docker run --rm redgate/flyway -licenseKey="FL01..." -url=sqlite:/flyway/project/dev.db info`
 
 Note that the syntax for **redgate/flyway:\*-azure** is slightly different in order to be compatible with Azure Pipelines
 agent job requirements. As it does not define an entrypoint, you need to explicitly add the `flyway` command. For example:
 
 `docker run --rm redgate/flyway:latest-azure flyway`
 
-## Adding SQL files
+## Flyway Pipelines
 
-To add your own SQL files, place them in a directory and mount it as the `flyway/sql` volume.
+To learn more about Flyway Pipelines you can access our official documentation [here](https://documentation.red-gate.com/fd/introducing-flyway-pipelines-251363987.html). 
+
+You can access the [Flyway Pipelines service here](https://flyway.red-gate.com/)
+
+To use Flyway Pipelines, you will need a Personal Access Token you can learn more about them [here](https://documentation.red-gate.com/fd/personal-access-tokens-251363983.html).
 
 ### Example
 
-Create a new directory and add a file named `V1__Initial.sql` with following contents:
+To use the Flyway service on your image, include the following:
+
+`docker run --rm -v /absolute/path/to/my/project_folder:/flyway/project redgate/flyway migrate -workingDirectory="project" –publishResults=true –email=<your_email> -token=<your_token>`
+
+## Adding SQL files
+
+To add your own SQL files, place them in a `sql/` folder in your project and point flyway at it using the [`workingDirectory`](https://documentation.red-gate.com/fd/working-directory-224919763.html) parameter.
+
+### Example
+
+Create a new `/sql` directory in your project folder and add a file named `V1__Initial.sql` with following contents:
 
 ```sql
 CREATE TABLE MyTable (
@@ -62,49 +61,40 @@ CREATE TABLE MyTable (
 
 Now run the image with the volume mapped:
 
-`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql redgate/flyway -licenseKey="FL01..." -url=jdbc:h2:mem:test -user=sa migrate`
+`docker run --rm -v /absolute/path/to/my/project_folder:/flyway/project redgate/flyway -url=jdbc:sqlite:dev.db -workingDirectory="project" migrate`
 
 ## Adding a config file
 
-If you prefer to store those arguments in a config file you can also do so using the `flyway/conf` volume.
+If you prefer to store arguments in a config file you can put that in your project folder.
 
 ### Example
 
-Create a file named `flyway.conf` with the following contents:
+Create a file named `flyway.toml` in your project folder with the following contents:
 
 ```
-flyway.url=jdbc:h2:mem:test
-flyway.user=sa
-flyway.licenseKey=FL01...
+[environments.development]
+url = "jdbc:sqlite:/flyway/project/dev.db"
+user= "admin"
+password = "password1"
+
+[flyway]
+environment = "development"
+email = "<email address for Redgate account>"
+token = "<your PAT token>"
+
 ```
 
 Now run the image with that volume mapped as well:
 
-`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf redgate/flyway migrate`
+`docker run --rm -v /absolute/path/to/my/project_folder:/flyway/project redgate/flyway migrate -workingDirectory="project"`
 
 ## Adding a JDBC driver
 
-If your database driver is not shipped by default (you can check the official documentation [here](https://flywaydb.org/documentation/) to see if it is), or if you want to use a different or newer driver than the one included you can do so using the `flyway/drivers` volume.
-
-### Example
-
-Create a directory and drop for example the MySQL JDBC driver in there.
-
-You can now let Flyway make use of it my mapping that volume as well:
-
-`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf -v /absolute/path/to/my/driverdir:/flyway/drivers redgate/flyway migrate`
+If your database driver is not shipped by default (you can check the [official documentation here](https://documentation.red-gate.com/fd/supported-databases-184127454.html) to see if it is), or if you want to use a different or newer driver than the one included you can create a  `drivers/` folder in your project folder.
 
 ## Adding Java-based migrations and callbacks
 
-To pass in Java-based migrations and callbacks you can use the `flyway/jars` volume.
-
-### Example
-
-Create a directory and drop for a jar with your Java-based migrations in there.
-
-You can now let Flyway make use of it my mapping that volume as well:
-
-`docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf -v /absolute/path/to/my/jardir:/flyway/jars redgate/flyway migrate`
+To pass in Java-based migrations and callbacks you can use a `jars/` folder in your project directory and place them in there.
 
 ## Docker Compose
 
