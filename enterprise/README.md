@@ -2,9 +2,9 @@
 
 [docker]: https://hub.docker.com/r/redgate/flyway/
 
-This is the official repository for [Flyway Command-line](https://flywaydb.org/documentation/usage/commandline/) images.
+This is the official repository for [Flyway Command-line](https://documentation.red-gate.com/fd/welcome-to-flyway-184127914.html) images.
 
-The Flyway Teams and Enterprise images are available in [redgate/flyway](https://hub.docker.com/r/redgate/flyway/) on Dockerhub.
+These images work across the complete range of Flyway editions, including Community, Teams and Enterprise, as well as providing compatibility with [Flyway Pipelines](https://flyway.red-gate.com/pipelines). Flyway Pipelines will help you gain centralized visibility of the state of your database deployments across projects so you can see what has been deployed, when and where for easy tracking.
 
 ## Supported Volumes
 
