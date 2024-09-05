@@ -1,12 +1,10 @@
-# Official Flyway Open Source Docker images
+# Flyway Open Source Docker images
 
-[docker]: https://hub.docker.com/r/flyway/flyway/
+This is the repository for [Flyway Command-line⁠](https://documentation.red-gate.com/fd/welcome-to-flyway-184127914.html) Open Source images. 
 
-This is the official repository for [Flyway Command-line](https://documentation.red-gate.com/fd/welcome-to-flyway-184127914.html) Open Source images.
+For the officially certified Redgate Flyway Docker images, use [Redgate/Flyway](https://hub.docker.com/r/redgate/flyway/) on Dockerhub, which works across the complete range of Flyway editions, including Community, Teams and Enterprise.
 
-The Flyway Community, Teams and Enterprise editions are available in [redgate/flyway](https://hub.docker.com/r/redgate/flyway/) on Dockerhub.
-
-Flyway Pipelines isn't available in this version - please use Flyway Community at [redgate/flyway](https://hub.docker.com/r/redgate/flyway/) if you want to use this feature of Flyway.
+[Redgate/Flyway](https://hub.docker.com/r/redgate/flyway/) also provides compatibility with [Flyway Pipelines](https://flyway.red-gate.com/pipelines). Flyway Pipelines will help you gain centralized visibility of the state of your database deployments across projects so you can see what has been deployed, when and where for easy tracking.
 
 ## Suggested Project Structure
 
