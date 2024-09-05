@@ -2,7 +2,7 @@
 
 This is the official repository for [Flyway Command-line](https://documentation.red-gate.com/fd/welcome-to-flyway-184127914.html) images.
 
-These images work across the complete range of Flyway editions, including Community, Teams and Enterprise, as well as providing compatibility with [Flyway Pipelines](https://flyway.red-gate.com/pipelines). Flyway Pipelines will help you gain centralized visibility of the state of your database deployments across projects so you can see what has been deployed, when and where for easy tracking.
+These images work across the complete range of Redgate Flyway editions, including Community, Teams and Enterprise, as well as providing compatibility with [Flyway Pipelines](https://flyway.red-gate.com/pipelines). Flyway Pipelines will help you gain centralized visibility of the state of your database deployments across projects so you can see what has been deployed, when and where for easy tracking.
 
 ## Supported Volumes
 
@@ -13,7 +13,7 @@ Volume            | Usage
 `/flyway/conf`    | Directory containing a [configuration file](https://documentation.red-gate.com/fd/configuration-files-224003079.html)
 `/flyway/drivers` | Directory containing the [JDBC driver for your database](https://documentation.red-gate.com/fd/command-line-184127404.html)
 `/flyway/sql`     | The SQL files that you want Flyway to use (for [SQL-based migrations](https://documentation.red-gate.com/fd/migrations-184127470.html))
-`/flyway/jars`    | The jars files that you want Flyway to use (for [Java-based migrations](https://documentation.red-gate.com/fd/migrations-184127470.html))
+`/flyway/jars`    | The jar files that you want Flyway to use (for [Java-based migrations](https://documentation.red-gate.com/fd/migrations-184127470.html))
 
 ## Getting started
 
@@ -42,7 +42,7 @@ To use Flyway Pipelines, you will need a [Personal Access Token](https://documen
 
 ### Example 
 
-To use the Flyway service on your image, include the following: 
+To use the Flyway service within this image, include the following: 
 ```
 docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf redgate/flyway migrate –publishResults=true –email=<E-mailLinkedToRedgateAccount> -token=<InsertPATokenHere>
 ```
