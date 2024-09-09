@@ -1,22 +1,8 @@
-# Official Flyway Teams and Enterprise Docker images
+# Official Redgate Flyway Docker images
 
-[![Docker Auto Build](https://img.shields.io/docker/cloud/automated/redgate/flyway)][docker]
+This is the official repository for [Flyway Command-line](https://documentation.red-gate.com/fd/welcome-to-flyway-184127914.html) images.
 
-[docker]: https://hub.docker.com/r/redgate/flyway/
-
-This is the official repository for [Flyway Command-line](https://flywaydb.org/documentation/usage/commandline/) images.
-
-The Flyway Teams and Enterprise images are available in [redgate/flyway](https://hub.docker.com/r/redgate/flyway/) on Dockerhub.
-
-## Supported Tags
-
-The following tags are officially supported:
-
-- [`9.2.1`, `9.2`, `9`, `latest` (*Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/Dockerfile)
-- [`9.2.1-alpine`, `9.2-alpine`, `9-alpine`, `latest-alpine` (*alpine/Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/alpine/Dockerfile)
-- [`9.2.1-azure`, `9.2-azure`, `9-azure`, `latest-azure` (*azure/Dockerfile*)](https://github.com/redgate/flyway-docker/blob/master/azure/Dockerfile)
-
-The **redgate/flyway:\*-azure** images *only* support alpine versions.
+These images work across the complete range of Redgate Flyway editions, including Community, Teams and Enterprise, as well as providing compatibility with [Flyway Pipelines](https://flyway.red-gate.com/pipelines). Flyway Pipelines will help you gain centralized visibility of the state of your database deployments across projects so you can see what has been deployed, when and where for easy tracking.
 
 ## Supported Volumes
 
@@ -24,10 +10,10 @@ To make it easy to run Flyway the way you want to, the following volumes are sup
 
 Volume            | Usage
 ------------------|------
-`/flyway/conf`    | Directory containing a `flyway.conf` [configuration file](https://flywaydb.org/documentation/usage/commandline/#configuration)
-`/flyway/drivers` | Directory containing the [JDBC driver for your database](https://flywaydb.org/documentation/usage/commandline/#jdbc-drivers)
-`/flyway/sql`     | The SQL files that you want Flyway to use (for [SQL-based migrations](https://flywaydb.org/documentation/concepts/migrations#sql-based-migrations))
-`/flyway/jars`    | The jars files that you want Flyway to use (for [Java-based migrations](https://flywaydb.org/documentation/concepts/migrations#java-based-migrations))
+`/flyway/conf`    | Directory containing a [configuration file](https://documentation.red-gate.com/fd/configuration-files-224003079.html)
+`/flyway/drivers` | Directory containing the [JDBC driver for your database](https://documentation.red-gate.com/fd/command-line-184127404.html)
+`/flyway/sql`     | The SQL files that you want Flyway to use (for [SQL-based migrations](https://documentation.red-gate.com/fd/migrations-184127470.html))
+`/flyway/jars`    | The jar files that you want Flyway to use (for [Java-based migrations](https://documentation.red-gate.com/fd/migrations-184127470.html))
 
 ## Getting started
 
@@ -45,6 +31,21 @@ Note that the syntax for **redgate/flyway:\*-azure** is slightly different in or
 agent job requirements. As it does not define an entrypoint, you need to explicitly add the `flyway` command. For example:
 
 `docker run --rm redgate/flyway:latest-azure flyway`
+
+## Flyway Pipelines 
+
+To learn more about Flyway Pipelines you can access our [official documentation](https://documentation.red-gate.com/fd/introducing-flyway-pipelines-251363987.html)
+
+You can access the Flyway Pipelines service here:  https://flyway.red-gate.com/ 
+
+To use Flyway Pipelines, you will need a [Personal Access Token](https://documentation.red-gate.com/fd/personal-access-tokens-251363983.html). 
+
+### Example 
+
+To use the Flyway service within this image, include the following: 
+```
+docker run --rm -v /absolute/path/to/my/sqldir:/flyway/sql -v /absolute/path/to/my/confdir:/flyway/conf redgate/flyway migrate –publishResults=true –email=<E-mailLinkedToRedgateAccount> -token=<InsertPATokenHere>
+```
 
 ## Adding SQL files
 
@@ -84,7 +85,7 @@ Now run the image with that volume mapped as well:
 
 ## Adding a JDBC driver
 
-If your database driver is not shipped by default (you can check the official documentation [here](https://flywaydb.org/documentation/) to see if it is), or if you want to use a different or newer driver than the one included you can do so using the `flyway/drivers` volume.
+If your database driver is not shipped by default (you can check the official documentation [here](https://documentation.red-gate.com/fd/flyway-cli-and-api-183306238.html) to see if it is), or if you want to use a different or newer driver than the one included you can do so using the `flyway/drivers` volume.
 
 ### Example
 
