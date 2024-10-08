@@ -12,7 +12,7 @@ RUN gzip -d flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && chmod -R a+r /flyway \
   && chmod a+x /flyway/flyway
 
-FROM eclipse-temurin:17.0.9_9-jre-alpine AS flyway
+FROM eclipse-temurin:17-jre-alpine AS flyway
 
 RUN apk --no-cache add --update bash openssl
 
