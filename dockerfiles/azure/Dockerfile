@@ -15,7 +15,7 @@ RUN gzip -d flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz \
 # Azure pipeline agents require specific things in their containers:
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops#linux-based-containers
 
-FROM node:19-alpine AS flyway
+FROM node:22-alpine AS flyway
 
 ENV LANG C.UTF-8
 ENV JAVA_VERSION 17.0.6
@@ -39,5 +39,6 @@ ENV REDGATE_DOCKER=true
 ARG SQLFLUFF_VERSION=3.0.7
 
 RUN apk add --no-cache icu-libs krb5-libs libgcc libintl libssl3 libstdc++ zlib icu \
-  && apk --no-cache add --update g++ python3 python3-dev py3-pip \
-  && pip3 install sqlfluff==${SQLFLUFF_VERSION}
+  && apk --no-cache add --update g++ python3 python3-dev pipx\
+  && pipx ensurepath \
+  && pipx install sqlfluff==${SQLFLUFF_VERSION}
