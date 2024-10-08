@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17.0.9_9-jre-alpine as flyway
+FROM eclipse-temurin:17.0.12_7-jre-alpine AS flyway
 
 RUN apk --no-cache add --update bash openssl
 
@@ -19,10 +19,10 @@ ENV PATH="/flyway:${PATH}"
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
 
-FROM flyway as redgate
+FROM flyway AS redgate
 
 ENV REDGATE_DOCKER=true
 
 RUN apk add --no-cache icu-libs krb5-libs libgcc libintl libssl3 libstdc++ zlib \
-    && apk --no-cache add --update python3 py3-pip \
-    && pip3 install sqlfluff==1.2.1
+  && apk --no-cache add --update python3 py3-pip \
+  && pip3 install sqlfluff==1.2.1
