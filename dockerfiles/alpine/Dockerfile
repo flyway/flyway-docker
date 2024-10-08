@@ -1,6 +1,4 @@
-FROM eclipse-temurin:17.0.9_9-jre-alpine as flyway
-
-RUN apk --no-cache add --update bash openssl
+FROM bash:5 AS untar
 
 WORKDIR /flyway
 
@@ -14,12 +12,20 @@ RUN gzip -d flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && chmod -R a+r /flyway \
   && chmod a+x /flyway/flyway
 
+FROM eclipse-temurin:17.0.9_9-jre-alpine AS flyway
+
+RUN apk --no-cache add --update bash openssl
+
+WORKDIR /flyway
+
+COPY --from=untar /flyway /flyway
+
 ENV PATH="/flyway:${PATH}"
 
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
 
-FROM flyway as redgate
+FROM flyway AS redgate
 
 ENV REDGATE_DOCKER=true
 ARG SQLFLUFF_VERSION=3.0.7
