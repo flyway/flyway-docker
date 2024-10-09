@@ -21,9 +21,6 @@ ARG FLYWAY_VERSION
 LABEL "org.opencontainers.image.version"="${FLYWAY_VERSION}"
 
 ENV LANG C.UTF-8
-ENV JAVA_VERSION 17.0.6
-ENV JAVA_ALPINE_VERSION 17.0.6_p10-r0
-
 
 RUN apk add --no-cache --virtual .pipeline-deps readline linux-pam \
   && apk add bash sudo shadow openssl curl tar \
