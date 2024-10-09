@@ -14,6 +14,9 @@ RUN gzip -d flyway-commandline-${FLYWAY_VERSION}.tar.gz \
 
 FROM eclipse-temurin:17-jre-jammy AS flyway
 
+ARG FLYWAY_VERSION
+LABEL "org.opencontainers.image.version"="${FLYWAY_VERSION}"
+
 WORKDIR /flyway
 
 COPY --from=untar /flyway /flyway

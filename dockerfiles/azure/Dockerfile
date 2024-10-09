@@ -17,6 +17,9 @@ RUN gzip -d flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz \
 
 FROM node:22-alpine AS flyway
 
+ARG FLYWAY_VERSION
+LABEL "org.opencontainers.image.version"="${FLYWAY_VERSION}"
+
 ENV LANG C.UTF-8
 ENV JAVA_VERSION 17.0.6
 ENV JAVA_ALPINE_VERSION 17.0.6_p10-r0
