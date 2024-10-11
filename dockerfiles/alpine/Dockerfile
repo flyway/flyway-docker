@@ -31,7 +31,7 @@ CMD ["-?"]
 FROM flyway AS redgate
 
 ENV REDGATE_DOCKER=true
-ARG SQLFLUFF_VERSION=3.0.7
+ARG SQLFLUFF_VERSION=3.2.3
 
 RUN apk add --no-cache icu-libs krb5-libs libgcc libintl libssl3 libstdc++ zlib \
   && apk --no-cache add --update python3 pipx \
