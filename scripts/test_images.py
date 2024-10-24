@@ -28,6 +28,7 @@ if __name__ == "__main__":
     flyway_cli_params = "-url=jdbc:h2:mem:test "
     if edition == "redgate":
         flyway_cli_params += f'-licenseKey={os.environ["FLYWAY_LICENSE_KEY"]} '
+        flyway_commands.append("check -code -reportFilename=report")
         
     for image in images:
         if "azure" in image:
