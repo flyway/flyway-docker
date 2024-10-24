@@ -4,11 +4,12 @@ WORKDIR /flyway
 
 ARG FLYWAY_VERSION
 
-COPY flyway-commandline-${FLYWAY_VERSION}.tar.gz .
+COPY flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz .
 
-RUN gzip -d flyway-commandline-${FLYWAY_VERSION}.tar.gz \
-  && tar -xf flyway-commandline-${FLYWAY_VERSION}.tar --strip-components=1 \
-  && rm flyway-commandline-${FLYWAY_VERSION}.tar \
+RUN gzip -d flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz \
+  && tar -xf flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar --strip-components=1 \
+  && rm flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar \
+  && rm /flyway/jre \
   && chmod -R a+r /flyway \
   && chmod a+x /flyway/flyway
 
