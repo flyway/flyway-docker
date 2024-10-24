@@ -25,11 +25,11 @@ if __name__ == "__main__":
     if len(sys.argv) > 3:
         env_var_flag = f'-e {sys.argv[3]}={os.getenv(sys.argv[3])}'
 
-    flyway_cli_params = "-url=jdbc:h2:mem:test "
+    flyway_cli_params = "-url=jdbc:sqlite:test "
     if edition == "redgate":
         flyway_cli_params += f'-licenseKey={os.environ["FLYWAY_LICENSE_KEY"]} '
         flyway_commands.append("check -code -reportFilename=report")
-        flyway_commands.append("check -changes -url=jdbc:sqlite:test -check.buildUrl=jdbc:sqlite:temp -reportFilename=report")
+        flyway_commands.append("check -changes -check.buildUrl=jdbc:sqlite:temp -reportFilename=report")
         
     for image in images:
         if "azure" in image:
