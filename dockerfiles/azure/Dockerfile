@@ -36,7 +36,7 @@ RUN ln -s /flyway/flyway /usr/local/bin/flyway
 FROM flyway AS redgate
 
 ENV REDGATE_DOCKER=true
-ARG SQLFLUFF_VERSION=3.2.3
+ARG SQLFLUFF_VERSION=3.0.7
 
 RUN apk add --no-cache icu-libs krb5-libs libgcc libintl libssl3 libstdc++ zlib icu \
   && apk --no-cache add --update g++ python3 python3-dev pipx\

@@ -29,7 +29,7 @@ CMD ["-?"]
 FROM flyway AS redgate
 
 ENV REDGATE_DOCKER=true
-ARG SQLFLUFF_VERSION=3.2.3
+ARG SQLFLUFF_VERSION=3.0.7
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends pipx \
