@@ -29,7 +29,7 @@ if __name__ == "__main__":
     if edition == "redgate":
         flyway_cli_params += f'-licenseKey={os.environ["FLYWAY_LICENSE_KEY"]} '
         flyway_commands.append("check -code -reportFilename=report")
-        flyway_commands.append("check -changes -check.buildUrl=jdbc:sqlite:temp -reportFilename=report")
+        flyway_commands.append("check -changes -check.buildUrl=jdbc:sqlite:temp -reportFilename=report -cleanDisabled=false")
         
     for image in images:
         if "azure" in image:
