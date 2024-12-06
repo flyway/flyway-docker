@@ -5,12 +5,18 @@ WORKDIR /flyway
 ARG FLYWAY_VERSION
 
 COPY flyway-commandline-${FLYWAY_VERSION}.tar.gz .
+COPY mongosh-linux.tgz .
 
 RUN gzip -d flyway-commandline-${FLYWAY_VERSION}.tar.gz \
   && tar -xf flyway-commandline-${FLYWAY_VERSION}.tar --strip-components=1 \
   && rm flyway-commandline-${FLYWAY_VERSION}.tar \
   && chmod -R a+r /flyway \
   && chmod a+x /flyway/flyway
+
+RUN mkdir mongosh \
+  && tar -zxvf mongosh-linux.tgz -C mongosh --strip-components=1 \
+  && rm mongosh-linux.tgz \
+  && chmod a+x /flyway/mongosh
 
 FROM eclipse-temurin:17-jre-jammy AS flyway
 
@@ -21,7 +27,7 @@ WORKDIR /flyway
 
 COPY --from=untar /flyway /flyway
 
-ENV PATH="/flyway:${PATH}"
+ENV PATH="/flyway:/flyway/mongosh/bin:${PATH}"
 
 ENTRYPOINT ["flyway"]
 CMD ["-?"]

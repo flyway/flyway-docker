@@ -5,12 +5,18 @@ WORKDIR /flyway
 ARG FLYWAY_VERSION
 
 COPY flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz .
+COPY mongosh-linux.tgz .
 
 RUN gzip -d flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz \
   && tar -xf flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar --strip-components=1 \
   && rm flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar \
   && chmod -R a+r /flyway \
   && chmod a+x /flyway/flyway
+
+RUN mkdir mongosh \
+  && tar -zxvf mongosh-linux.tgz -C mongosh --strip-components=1 \
+  && rm mongosh-linux.tgz \
+  && chmod a+x /flyway/mongosh
 
 # Azure pipeline agents require specific things in their containers:
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops#linux-based-containers
@@ -32,6 +38,7 @@ WORKDIR /flyway
 
 COPY --from=untar /flyway /flyway
 RUN ln -s /flyway/flyway /usr/local/bin/flyway
+RUN ln -s /flyway/mongosh/bin /usr/local/bin/mongosh
 
 FROM flyway AS redgate
 
