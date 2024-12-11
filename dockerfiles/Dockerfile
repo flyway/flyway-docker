@@ -21,7 +21,7 @@ WORKDIR /flyway
 
 COPY --from=untar /flyway /flyway
 
-ENV PATH="/flyway:/flyway/mongosh/bin:${PATH}"
+ENV PATH="/flyway:${PATH}"
 
 ENTRYPOINT ["flyway"]
 CMD ["-?"]
