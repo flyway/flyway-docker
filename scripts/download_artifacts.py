@@ -13,36 +13,31 @@ def get_repo_url(edition, version, artifact_suffix):
     exit(1)
 
 def await_and_download_artifact(url, file):
-    i = 100
-    while i > 0:
+    while True:
         try:
             response = urllib.request.urlopen(url)
             artifact_file = open(file, 'wb')
             artifact_file.write(response.read())
             response.close()
             artifact_file.close()
-            return True
+            break
         except HTTPError:
             time.sleep(2)
-            print(f"Unable to download artifact: {url}. Trying again in 2 seconds...")
-            i -= 1
-    return False
+            print("Unable to download artifacts. Trying again in 2 seconds...")
 
 def await_and_download_rg_artifact(edition, version, artifact_suffix):
     url = get_repo_url(edition, version, artifact_suffix)
-    return await_and_download_artifact(url, f'flyway-commandline-{version}{artifact_suffix}.tar.gz')
+    await_and_download_artifact(url, f'flyway-commandline-{version}{artifact_suffix}.tar.gz')
 
 def await_and_download_mongosh(version):
     url = f'https://downloads.mongodb.com/compass/mongosh-{version}-linux-x64.tgz'
     file = 'mongosh-linux.tgz'
-    return await_and_download_artifact(url, file)
+    await_and_download_artifact(url, file)
 
 if __name__ == "__main__":
     edition = sys.argv[1]
     version = sys.argv[2]
-    success = await_and_download_rg_artifact(edition, version, "")
-    success &= await_and_download_rg_artifact(edition, version, "-linux-alpine-x64")
-    success &= await_and_download_mongosh("2.3.4")
-    if not success:
-        exit(1)
+    await_and_download_rg_artifact(edition, version, "")
+    await_and_download_rg_artifact(edition, version, "-linux-alpine-x64")
+    await_and_download_mongosh("2.3.4")
     
